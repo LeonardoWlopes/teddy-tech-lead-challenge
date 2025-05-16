@@ -15,11 +15,13 @@ export const baseConfig = [
 	eslintConfigPrettier,
 	...tseslint.configs.recommended,
 	{
+		extends: [prettier],
 		plugins: {
 			turbo: turboPlugin,
 		},
 		rules: {
 			'turbo/no-undeclared-env-vars': 'warn',
+			'prettier/prettier': 'warn',
 		},
 	},
 	{

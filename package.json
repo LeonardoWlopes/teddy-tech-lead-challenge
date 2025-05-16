@@ -22,7 +22,6 @@
 		"@semantic-release/release-notes-generator": "^14.0.3",
 		"lefthook": "^1.11.12",
 		"lint-staged": "^16.0.0",
-		"prettier": "^3.5.3",
 		"turbo": "^2.5.3",
 		"typescript": "5.8.2"
 	},
