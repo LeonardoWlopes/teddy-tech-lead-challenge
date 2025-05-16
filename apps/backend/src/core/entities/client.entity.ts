@@ -1,5 +1,6 @@
 import { BaseEntity, IBaseEntity } from '~/core/entities/base.entity';
 import { Currency } from '~/core/value-objects/currency.value-object';
+import { Id } from '../value-objects/id.value-object';
 
 interface IClient extends IBaseEntity {
 	name: string;
@@ -7,11 +8,13 @@ interface IClient extends IBaseEntity {
 	companyValue: Currency;
 }
 
-export class Client extends BaseEntity {
-	private _props: IClient;
+type IRawClient = Omit<IClient, keyof IBaseEntity>;
 
-	constructor(payload: IClient) {
-		const { id, createdAt, updatedAt, name, salary, companyValue } = payload;
+export class Client extends BaseEntity {
+	private _props: IRawClient;
+
+	constructor(payload: IClient, id?: Id) {
+		const { createdAt, updatedAt, name, salary, companyValue } = payload;
 
 		super({ id, createdAt, updatedAt });
 
@@ -30,14 +33,18 @@ export class Client extends BaseEntity {
 		}
 	}
 
-	public update(props: Partial<Omit<IClient, keyof IBaseEntity>>): void {
-		const newProps = { ...this._props, ...props };
+	public update(props: Partial<IRawClient>): void {
+		const newProps: IClient = {
+			companyValue: props.companyValue || this._props.companyValue,
+			salary: props.salary || this._props.salary,
+			name: props.name || this._props.name,
+			createdAt: this.createdAt,
+			updatedAt: new Date(),
+		};
 
 		this.validate(newProps);
 
 		this._props = newProps;
-
-		this.updatedAt = new Date();
 	}
 
 	get name(): string {

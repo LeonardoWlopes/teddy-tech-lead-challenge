@@ -1,10 +1,10 @@
-import crypto from 'node:crypto';
+import { randomUUID } from 'node:crypto';
 
 export class Id {
 	private _id: string;
 
 	constructor(id?: string) {
-		this._id = id || crypto.randomUUID();
+		this._id = id || randomUUID();
 	}
 
 	get value(): string {

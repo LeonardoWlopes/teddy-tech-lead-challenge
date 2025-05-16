@@ -9,7 +9,16 @@ export class InMemoryClientRepository implements ClientRepository {
 		return (
 			this.clients.find((client) => {
 				return Object.keys(params).every((key) => {
-					return client[key] === params[key];
+					const clientValue = client[key];
+					const paramValue = params[key];
+
+					if (clientValue && typeof clientValue === 'object' && 'value' in clientValue) {
+						return paramValue && typeof paramValue === 'object' && 'value' in paramValue
+							? clientValue.value === paramValue.value
+							: false;
+					}
+
+					return clientValue === paramValue;
 				});
 			}) || null
 		);
@@ -32,6 +41,18 @@ export class InMemoryClientRepository implements ClientRepository {
 		console.log(this.clients.length);
 
 		this.clients.push(client);
+		return client;
+	}
+
+	async update(client: Client): Promise<Client> {
+		const index = this.clients.findIndex((c) => c.id.value === client.id.value);
+
+		if (index === -1) {
+			throw new Error('Client not found');
+		}
+
+		this.clients[index] = client;
+
 		return client;
 	}
 }

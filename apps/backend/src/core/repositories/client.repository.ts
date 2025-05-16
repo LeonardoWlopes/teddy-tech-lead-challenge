@@ -6,4 +6,5 @@ export abstract class ClientRepository {
 	abstract find(pagination: Pagination): Promise<Client[]>;
 	abstract count(): Promise<number>;
 	abstract create(client: Client): Promise<Client>;
+	abstract update(client: Client): Promise<Client>;
 }

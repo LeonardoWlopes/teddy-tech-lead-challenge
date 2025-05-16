@@ -1,7 +1,7 @@
 type CurrencyValue = number | string;
 
 export class Currency {
-	private readonly _value: number;
+	private _value: number;
 	private static readonly PRECISION = 2;
 	private static readonly MULTIPLIER = 10 ** Currency.PRECISION;
 

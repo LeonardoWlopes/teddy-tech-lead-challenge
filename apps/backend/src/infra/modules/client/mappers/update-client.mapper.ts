@@ -1,10 +1,11 @@
 import { Client } from '~/core/entities/client.entity';
 import { CreateClientDto } from '../dtos/create-client.dto';
 import { Currency } from '~/core/value-objects/currency.value-object';
+import { UpdateClientDto } from '../dtos/update-client.dto';
 import { Id } from '~/core/value-objects/id.value-object';
 
-export class CreateClientMapper {
-	static toDomain(client: CreateClientDto, id?: string): Client {
+export class UpdateClientMapper {
+	static toDomain(client: UpdateClientDto, id?: string): Client {
 		return new Client(
 			{
 				name: client.name,
