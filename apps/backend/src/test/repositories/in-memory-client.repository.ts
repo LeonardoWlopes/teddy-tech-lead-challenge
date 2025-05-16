@@ -1,4 +1,5 @@
 import { Client } from '~/core/entities/client.entity';
+import { Pagination } from '~/core/entities/pagination.entity';
 import { ClientRepository } from '~/core/repositories/client.repository';
 
 export class InMemoryClientRepository implements ClientRepository {
@@ -14,7 +15,22 @@ export class InMemoryClientRepository implements ClientRepository {
 		);
 	}
 
+	async find(pagination: Pagination): Promise<Client[]> {
+		const { page, limit } = pagination;
+
+		console.log(this.clients.length);
+		const clients = this.clients.slice((page - 1) * limit, page * limit);
+
+		return clients;
+	}
+
+	async count(): Promise<number> {
+		return this.clients.length;
+	}
+
 	async create(client: Client): Promise<Client> {
+		console.log(this.clients.length);
+
 		this.clients.push(client);
 		return client;
 	}

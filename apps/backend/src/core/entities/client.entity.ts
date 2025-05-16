@@ -31,7 +31,12 @@ export class Client extends BaseEntity {
 	}
 
 	public update(props: Partial<Omit<IClient, keyof IBaseEntity>>): void {
-		this._props = { ...this._props, ...props };
+		const newProps = { ...this._props, ...props };
+
+		this.validate(newProps);
+
+		this._props = newProps;
+
 		this.updatedAt = new Date();
 	}
 

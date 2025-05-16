@@ -1,15 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ClientService } from '../../client.service';
-import { CreateClientDto } from '../dto/create-client.dto';
-import { UpdateClientDto } from '../dto/update-client.dto';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { CreateClientDto } from '../dtos/create-client.dto';
+import { UpdateClientDto } from '../dtos/update-client.dto';
 import { CreateClientUseCase } from '~/core/use-cases/client/create-client.use-case';
-import { Client } from '~/core/domain/entities/client.entity';
+import { Client } from '~/core/entities/client.entity';
 import { CreateClientMapper } from '../mappers/create-client.mapper';
-import { ClientViewModel } from '~/core/domain/view-models/client.view-model';
+import { ClientViewModel } from '~/core/view-models/client.view-model';
+import { PaginationDto } from '~/infra/common/dtos/pagination.dto';
+import { ListClientUseCase } from '~/core/use-cases/client/list-client.use-case';
+import { Pagination } from '~/core/entities/pagination.entity';
+import { PaginationViewModel } from '~/core/view-models/pagination.view-model';
 
 @Controller('client')
 export class ClientController {
-	constructor(private readonly createClient: CreateClientUseCase) {}
+	constructor(
+		private readonly createClient: CreateClientUseCase,
+		private readonly listClient: ListClientUseCase,
+	) {}
 
 	@Post()
 	async create(@Body() createClientDto: CreateClientDto) {
@@ -20,10 +26,20 @@ export class ClientController {
 		return ClientViewModel.toHTTP(response);
 	}
 
-	// @Get()
-	// findAll() {
-	// 	return this.clientService.findAll();
-	// }
+	@Get()
+	async list(@Query() { limit, page }: PaginationDto) {
+		const pagination = new Pagination({
+			limit,
+			page,
+		});
+
+		const response = await this.listClient.execute(pagination);
+
+		return {
+			clients: response.clients.map(ClientViewModel.toHTTP),
+			metadata: PaginationViewModel.toHTTP(response.pagination),
+		};
+	}
 
 	// @Get(':id')
 	// findOne(@Param('id') id: string) {

@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { ClientController } from './controllers/client.controller';
 import { CreateClientUseCase } from '~/core/use-cases/client/create-client.use-case';
+import { ListClientUseCase } from '~/core/use-cases/client/list-client.use-case';
+import { ClientController } from './controllers/client.controller';
 
 @Module({
 	controllers: [ClientController],
-	providers: [CreateClientUseCase],
+	providers: [CreateClientUseCase, ListClientUseCase],
 })
 export class ClientModule {}
