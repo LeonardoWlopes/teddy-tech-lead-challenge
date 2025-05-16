@@ -55,4 +55,8 @@ export class InMemoryClientRepository implements ClientRepository {
 
 		return client;
 	}
+
+	async delete(id: string): Promise<void> {
+		this.clients = this.clients.filter((client) => client.id.value !== id);
+	}
 }

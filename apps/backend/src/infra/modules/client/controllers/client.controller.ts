@@ -9,14 +9,16 @@ import { PaginationDto } from '~/infra/common/dtos/pagination.dto';
 import { ListClientUseCase } from '~/core/use-cases/client/list-client.use-case';
 import { Pagination } from '~/core/entities/pagination.entity';
 import { PaginationViewModel } from '~/core/view-models/pagination.view-model';
-import { UpdateClientUseCase } from '~/core/use-cases/client/update-client.use-case';
+import { DeleteClientUseCase } from '~/core/use-cases/client/delete-client.use';
 import { UpdateClientMapper } from '../mappers/update-client.mapper';
+import { UpdateClientUseCase } from '~/core/use-cases/client/update-client.use-case';
 @Controller('client')
 export class ClientController {
 	constructor(
 		private readonly createClient: CreateClientUseCase,
 		private readonly listClient: ListClientUseCase,
 		private readonly updateClient: UpdateClientUseCase,
+		private readonly deleteClient: DeleteClientUseCase,
 	) {}
 
 	@Post()
@@ -54,6 +56,6 @@ export class ClientController {
 
 	@Delete(':id')
 	remove(@Param('id') id: string) {
-		return this.clientService.remove(+id);
+		return this.deleteClient.execute(id);
 	}
 }

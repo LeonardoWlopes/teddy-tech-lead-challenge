@@ -7,4 +7,5 @@ export abstract class ClientRepository {
 	abstract count(): Promise<number>;
 	abstract create(client: Client): Promise<Client>;
 	abstract update(client: Client): Promise<Client>;
+	abstract delete(id: string): Promise<void>;
 }
