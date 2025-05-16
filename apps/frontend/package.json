@@ -16,8 +16,7 @@
 		"test": "vitest",
 		"test:watch": "vitest --watch",
 		"test:cov": "vitest run --coverage",
-		"test:ui": "vitest --ui",
-		"prepare": "lefthook install"
+		"test:ui": "vitest --ui"
 	},
 	"dependencies": {
 		"date-fns": "^4.1.0",

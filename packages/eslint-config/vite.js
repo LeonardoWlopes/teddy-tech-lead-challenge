@@ -5,7 +5,6 @@ import tseslint from 'typescript-eslint';
 import { baseConfig } from './base.js';
 
 export default tseslint.config(...baseConfig, {
-	files: ['**/*.{ts,tsx,js}'],
 	languageOptions: {
 		ecmaVersion: 2020,
 		globals: globals.browser,

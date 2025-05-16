@@ -15,6 +15,7 @@ export const baseConfig = [
 	eslintConfigPrettier,
 	...tseslint.configs.recommended,
 	{
+		files: ['**/*.{ts,tsx,js}'],
 		extends: [prettier],
 		plugins: {
 			turbo: turboPlugin,
