@@ -7,7 +7,7 @@
 		"./base": "./base.js",
 		"./nest": "./nest.js",
 		"./vite": "./vite.js",
-		"./.prettierrc": "./.prettierrc.js"
+		"./prettierrc": "./.prettierrc.js"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.26.0",

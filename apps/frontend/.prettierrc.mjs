@@ -1,4 +1,4 @@
-import baseConfig from '@repo/eslint-config/.prettierrc';
+import baseConfig from '@repo/eslint-config/prettierrc';
 
 /**
  * @type {import("prettier").Config}
