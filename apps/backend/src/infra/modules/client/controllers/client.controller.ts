@@ -1,8 +1,7 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { CreateClientDto } from '../dtos/create-client.dto';
 import { UpdateClientDto } from '../dtos/update-client.dto';
 import { CreateClientUseCase } from '~/core/use-cases/client/create-client.use-case';
-import { Client } from '~/core/entities/client.entity';
 import { CreateClientMapper } from '../mappers/create-client.mapper';
 import { ClientViewModel } from '~/core/view-models/client.view-model';
 import { PaginationDto } from '~/infra/common/dtos/pagination.dto';

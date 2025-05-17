@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Client } from '~/core/entities/client.entity';
 import { ConflictError } from '~/core/errors/conflict.error';
 import { ClientRepository } from '~/core/repositories/client.repository';

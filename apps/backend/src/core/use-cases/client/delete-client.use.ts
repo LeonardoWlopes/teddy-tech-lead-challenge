@@ -1,7 +1,5 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { Client } from '~/core/entities/client.entity';
+import { Injectable } from '@nestjs/common';
 import { ClientRepository } from '~/core/repositories/client.repository';
-import { ConflictError } from '~/core/errors/conflict.error';
 import { Id } from '~/core/value-objects/id.value-object';
 import { NotFoundError } from '~/core/errors/not-found.error';
 
