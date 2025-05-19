@@ -13,7 +13,9 @@ export function Layout() {
 			<div className="flex flex-1 flex-col">
 				<Header toggleIsMenuOpen={toggleIsMenuOpen} />
 
-				<Outlet />
+				<main className="flex h-full flex-col overflow-y-auto px-30 py-8">
+					<Outlet />
+				</main>
 			</div>
 		</div>
 	);

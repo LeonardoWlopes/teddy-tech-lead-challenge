@@ -3,11 +3,14 @@ import { createRoot } from 'react-dom/client';
 import { Router } from './router';
 import '~/i18n/config';
 import { Toaster } from 'sonner';
+import { QueryProvider } from './providers/query-provider';
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
-		<Router />
+		<QueryProvider>
+			<Router />
 
-		<Toaster />
+			<Toaster />
+		</QueryProvider>
 	</StrictMode>,
 );

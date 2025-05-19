@@ -1,20 +1,20 @@
 import { twMerge } from 'tailwind-merge';
 import { Loading } from '../loading';
 import type { IButtonProps } from './types';
+import { buttonVariants } from './styles';
 
 export function Button({
 	className,
 	children,
 	disabled = false,
 	loading = false,
+	variant,
+	size,
 	...rest
 }: IButtonProps) {
 	return (
 		<button
-			className={twMerge(
-				'h-[3.75rem] cursor-pointer rounded-sm bg-orange-500 text-2xl font-bold text-white active:opacity-80',
-				className,
-			)}
+			className={twMerge(buttonVariants({ variant, size }), className)}
 			disabled={disabled}
 			{...rest}
 		>

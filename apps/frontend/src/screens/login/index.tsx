@@ -15,7 +15,7 @@ export default function LoginScreen() {
 
 				<Input ref={inputRef} className="w-full" placeholder={t('input')} />
 
-				<Button className="w-full" type="submit">
+				<Button className="w-full" size="lg" type="submit">
 					{t('button')}
 				</Button>
 			</form>

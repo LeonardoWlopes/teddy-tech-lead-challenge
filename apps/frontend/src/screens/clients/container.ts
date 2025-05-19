@@ -1,34 +1,22 @@
-import { FormEvent, useCallback, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
-import { toast } from 'sonner';
-import { useAuthStore } from '~/stores/auth';
-import { useNavigate } from 'react-router';
+import { useState } from 'react';
+import { useGetClients } from '~/services/clients';
 
 export function useClientsContainer() {
-	const { t } = useTranslation('clients');
+	const [page, setPage] = useState(1);
 
-	const inputRef = useRef<HTMLInputElement>(null);
+	const [itemsPerPage, setItemsPerPage] = useState(15);
 
-	const setAuthStore = useAuthStore((state) => state.set);
-
-	const navigate = useNavigate();
-
-	const handleLogin = useCallback((event: FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-
-		const userName = inputRef.current?.value;
-
-		if (!userName) {
-			toast.warning(t('error'));
-			return;
-		}
-
-		setAuthStore({ userName });
-		navigate(0);
-	}, []);
+	const { data, isLoading: isLoadingClients } = useGetClients({
+		page,
+		limit: itemsPerPage,
+	});
 
 	return {
-		inputRef,
-		handleLogin,
+		data,
+		isLoadingClients,
+		page,
+		itemsPerPage,
+		setPage,
+		setItemsPerPage,
 	};
 }

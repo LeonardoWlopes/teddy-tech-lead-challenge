@@ -11,7 +11,8 @@ import { PaginationViewModel } from '~/core/view-models/pagination.view-model';
 import { DeleteClientUseCase } from '~/core/use-cases/client/delete-client.use';
 import { UpdateClientMapper } from '../mappers/update-client.mapper';
 import { UpdateClientUseCase } from '~/core/use-cases/client/update-client.use-case';
-@Controller('client')
+
+@Controller('clients')
 export class ClientController {
 	constructor(
 		private readonly createClient: CreateClientUseCase,
@@ -39,7 +40,7 @@ export class ClientController {
 		const response = await this.listClient.execute(pagination);
 
 		return {
-			clients: response.clients.map(ClientViewModel.toHTTP),
+			items: response.clients.map(ClientViewModel.toHTTP),
 			metadata: PaginationViewModel.toHTTP(response.pagination),
 		};
 	}

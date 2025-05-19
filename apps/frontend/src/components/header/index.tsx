@@ -12,7 +12,7 @@ export function Header({ toggleIsMenuOpen }: IHeaderProps) {
 	const { handleLogout, firstName } = useHeaderContainer();
 
 	return (
-		<header className="flex h-[6.25rem] items-center justify-between bg-white px-12 shadow-md select-none">
+		<header className="flex min-h-[6.25rem] items-center justify-between bg-white pr-30 pl-12 shadow-md select-none">
 			<div className="flex items-center justify-center gap-10">
 				<MenuIcon
 					className="h-6 w-6 cursor-pointer active:opacity-80"

@@ -10,5 +10,16 @@
 		"selected_clients": "Clientes Selecionados",
 		"exit": "Sair",
 		"hello": "Olá, <strong>{{name}}</strong>!"
+	},
+	"clients": {
+		"list_count_zero": "Nenhum cliente encontrado",
+		"list_count_one": "<strong>{{count}}</strong> cliente encontrado",
+		"list_count_other": "<strong>{{count}}</strong> clientes encontrados",
+		"pagination": "Clientes por página",
+		"create": "Criar cliente"
+	},
+	"client_card": {
+		"salary": "Salário",
+		"company": "Empresa"
 	}
 }
