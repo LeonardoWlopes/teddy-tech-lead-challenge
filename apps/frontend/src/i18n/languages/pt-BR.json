@@ -5,4 +5,10 @@
 		"button": "Entrar",
 		"error": "Nome de usuário é obrigatório"
 	},
+	"header": {
+		"clients": "Clientes",
+		"selected_clients": "Clientes Selecionados",
+		"exit": "Sair",
+		"hello": "Olá, <strong>{{name}}</strong>!"
+	}
 }
