@@ -3,8 +3,7 @@ import { persist } from 'zustand/middleware';
 import type { IUser } from '~/interfaces/auth';
 
 interface IAuthState {
-	user: IUser | null;
-	accessToken: string | null;
+	userName: string | null;
 }
 
 interface IAuthActions {
@@ -15,8 +14,7 @@ interface IAuthActions {
 type IAuthStore = IAuthState & IAuthActions;
 
 const DEFAULT_STATE: IAuthState = {
-	user: null,
-	accessToken: null,
+	userName: null,
 };
 
 export const useAuthStore = create<IAuthStore>()(
@@ -27,7 +25,7 @@ export const useAuthStore = create<IAuthStore>()(
 			reset: () => set(DEFAULT_STATE),
 		}),
 		{
-			name: '@template/auth-store',
+			name: '@teddy/auth-store',
 		},
 	),
 );

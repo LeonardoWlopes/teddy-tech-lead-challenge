@@ -21,8 +21,6 @@
         "esbenp.prettier-vscode",
         "cipchk.cssrem",
         "bradlc.vscode-tailwindcss",
-        "vitest.explorer",
-        "prisma.prisma",
-        "prisma.prisma-insider"
+        "vitest.explorer"
     ]
 }

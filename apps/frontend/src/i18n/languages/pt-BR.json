@@ -1,1 +1,8 @@
-{}
+{
+	"login": {
+		"welcome": "Olá, seja bem-vindo!",
+		"input": "Digite o seu nome:",
+		"button": "Entrar",
+		"error": "Nome de usuário é obrigatório"
+	},
+}

@@ -2,7 +2,6 @@ import { renderHook } from '@testing-library/react';
 import { act } from '@testing-library/react';
 import { useAuthStore } from '~/stores/auth';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { makeUserSut } from '~/__tests__/factories/user';
 
 describe('useAuthStore', () => {
 	beforeEach(() => {
@@ -14,37 +13,32 @@ describe('useAuthStore', () => {
 
 	it('should initialize with default state', () => {
 		const { result } = renderHook(() => useAuthStore());
-		expect(result.current.user).toBeNull();
-		expect(result.current.accessToken).toBeNull();
+		expect(result.current.userName).toBeNull();
 	});
 
-	it('should set user and accessToken', () => {
+	it('should set userName', () => {
 		const { result } = renderHook(() => useAuthStore());
-		const user = makeUserSut();
-		const accessToken = 'token123';
+		const userName = 'John Doe';
 
 		act(() => {
-			result.current.set({ user, accessToken });
+			result.current.set({ userName });
 		});
 
-		expect(result.current.user).toEqual(user);
-		expect(result.current.accessToken).toEqual(accessToken);
+		expect(result.current.userName).toEqual(userName);
+	});
+});
+
+it('should reset to default state', () => {
+	const { result } = renderHook(() => useAuthStore());
+	const userName = 'John Doe';
+
+	act(() => {
+		result.current.set({ userName });
 	});
 
-	it('should reset to default state', () => {
-		const { result } = renderHook(() => useAuthStore());
-		const user = makeUserSut();
-		const accessToken = 'token123';
-
-		act(() => {
-			result.current.set({ user, accessToken });
-		});
-
-		act(() => {
-			result.current.reset();
-		});
-
-		expect(result.current.user).toBeNull();
-		expect(result.current.accessToken).toBeNull();
+	act(() => {
+		result.current.reset();
 	});
+
+	expect(result.current.userName).toBeNull();
 });
