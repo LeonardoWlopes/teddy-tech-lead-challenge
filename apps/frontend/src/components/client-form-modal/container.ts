@@ -1,11 +1,11 @@
 import { useForm } from 'react-hook-form';
-import { IClientFormModalForm } from './types';
+import type { IClientFormModalForm } from './types';
 import { clientModalSchema } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { devError } from '~/utils/log';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
-import { IClientFormModalProps } from './types';
+import type { IClientFormModalProps } from './types';
 import { usePatchClient, usePostClient } from '~/services/clients';
 import { queryClient } from '~/providers/query-provider';
 import { EQueryKeys } from '~/enums/query';

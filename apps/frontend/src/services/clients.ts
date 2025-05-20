@@ -1,10 +1,11 @@
-import { UseMutationResult, UseQueryResult, useMutation, useQuery } from '@tanstack/react-query';
+import type { UseMutationResult, UseQueryResult } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { api } from './api';
 import { EQueryKeys } from '~/enums/query';
-import { IError } from '~/interfaces/error';
-import { IPaginatedResponse, IPaginationRequest } from '~/interfaces/common';
-import { IClient, IClientRequest } from '~/interfaces/client';
+import type { IError } from '~/interfaces/error';
+import type { IPaginatedResponse, IPaginationRequest } from '~/interfaces/common';
+import type { IClient, IClientRequest } from '~/interfaces/client';
 import { buildUrl } from '~/utils/url';
 import { useClientStore } from '~/stores/client';
 

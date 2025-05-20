@@ -1,5 +1,5 @@
 import { twMerge } from 'tailwind-merge';
-import { IModalProps } from './types';
+import type { IModalProps } from './types';
 import { useRef } from 'react';
 import CloseIcon from '~/assets/icons/close.svg';
 import { useOnClickOutside } from '~/hooks/use-on-click-outside';

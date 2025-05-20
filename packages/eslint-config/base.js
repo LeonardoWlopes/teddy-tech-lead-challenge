@@ -27,6 +27,7 @@ export const baseConfig = [
 			'turbo/no-undeclared-env-vars': 'warn',
 			'prettier/prettier': 'warn',
 			'@typescript-eslint/no-unused-vars': 'off',
+			'@typescript-eslint/no-empty-object-type': 'warn',
 			'unused-imports/no-unused-imports': 'error',
 			'unused-imports/no-unused-vars': [
 				'warn',

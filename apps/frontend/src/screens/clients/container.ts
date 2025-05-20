@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { useGetClients } from '~/services/clients';
-import { IClient } from '~/interfaces/client';
+import type { IClient } from '~/interfaces/client';
 import { useClientStore } from '~/stores/client';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';

@@ -1,50 +1,50 @@
 {
-	"login": {
-		"welcome": "Olá, seja bem-vindo!",
-		"input": "Digite o seu nome:",
-		"button": "Entrar",
-		"error": "Nome de usuário é obrigatório"
-	},
-	"header": {
-		"clients": "Clientes",
-		"selected_clients": "Clientes Selecionados",
-		"exit": "Sair",
-		"hello": "Olá, <strong>{{name}}</strong>!"
-	},
-	"clients": {
-		"list_count_zero": "Nenhum cliente encontrado",
-		"list_count_one": "<strong>{{count}}</strong> cliente encontrado",
-		"list_count_other": "<strong>{{count}}</strong> clientes encontrados",
-		"pagination": "Clientes por página",
-		"create": "Criar cliente",
-		"success_select": "Cliente selecionado com sucesso"
-	},
 	"client_card": {
-		"salary": "Salário",
-		"company": "Empresa"
+		"company": "Empresa",
+		"salary": "Salário"
 	},
 	"client_form_modal": {
-		"edit": "Editar cliente",
+		"company": "Digite o valor da empresa",
 		"create": "Criar cliente",
+		"edit": "Editar cliente",
+		"invalid_form": "Formulário inválido",
 		"name": "Digite o nome",
 		"salary": "Digite o salário",
-		"company": "Digite o valor da empresa",
-		"invalid_form": "Formulário inválido",
 		"success_create": "Cliente criado com sucesso",
 		"success_update": "Cliente atualizado com sucesso"
 	},
+	"clients": {
+		"create": "Criar cliente",
+		"list_count_one": "<strong>{{count}}</strong> cliente encontrado",
+		"list_count_other": "<strong>{{count}}</strong> clientes encontrados",
+		"list_count_zero": "Nenhum cliente encontrado",
+		"pagination": "Clientes por página",
+		"success_select": "Cliente selecionado com sucesso"
+	},
 	"delete_client_modal": {
-		"title": "Excluir cliente",
+		"button": "Excluir cliente",
 		"description": "Você está prestes a excluir o cliente: <strong>{{name}}</strong>",
-		"button": "Excluir cliente"
+		"title": "Excluir cliente"
 	},
 	"errors": {
-		"required": "Campo obrigatório",
+		"invalid": "Valor inválido",
 		"min": "O valor mínimo é {{min}}",
-		"invalid": "Valor inválido"
+		"required": "Campo obrigatório"
+	},
+	"header": {
+		"clients": "Clientes",
+		"exit": "Sair",
+		"hello": "Olá, <strong>{{name}}</strong>!",
+		"selected_clients": "Clientes Selecionados"
+	},
+	"login": {
+		"button": "Entrar",
+		"error": "Nome de usuário é obrigatório",
+		"input": "Digite o seu nome:",
+		"welcome": "Olá, seja bem-vindo!"
 	},
 	"selected_clients": {
-		"title": "Clientes selecionados",
-		"clear": "Limpar clientes selecionados"
+		"clear": "Limpar clientes selecionados",
+		"title": "Clientes selecionados"
 	}
 }

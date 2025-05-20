@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Modal } from '../modal';
-import { IClientFormModalProps } from './types';
+import type { IClientFormModalProps } from './types';
 import { useClientFormModalContainer } from './container';
 import { ControlledInput } from '../input/controlled';
 import { Button } from '../button';
