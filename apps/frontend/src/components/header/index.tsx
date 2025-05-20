@@ -1,4 +1,4 @@
-import type { IHeaderProps } from './types';
+import { IHeaderProps } from './types';
 import MenuIcon from '../../assets/icons/menu.svg';
 import logo from '../../assets/images/logo.png';
 import { HEADER_NAVIGATION_MOCK } from '~/utils/mock';

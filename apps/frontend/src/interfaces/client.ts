@@ -1,4 +1,4 @@
-import type { IBaseEntity } from './common';
+import { IBaseEntity } from './common';
 
 export interface IClient extends IBaseEntity {
 	companyValue: number;

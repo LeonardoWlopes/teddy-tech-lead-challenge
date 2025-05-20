@@ -1,5 +1,4 @@
-import type { FormEvent } from 'react';
-import { useCallback, useRef } from 'react';
+import { FormEvent, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { useAuthStore } from '~/stores/auth';

@@ -1,5 +1,5 @@
 import { useCallback, useRef } from 'react';
-import type { IMenuProps } from './types';
+import { IMenuProps } from './types';
 import ArrowLeftIcon from '~/assets/icons/circle-arrow-left.svg';
 import logo from '~/assets/images/logo.png';
 import { useOnClickOutside } from '~/hooks/use-on-click-outside';

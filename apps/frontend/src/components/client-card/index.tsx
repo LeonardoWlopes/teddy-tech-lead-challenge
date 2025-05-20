@@ -1,5 +1,5 @@
 import { twMerge } from 'tailwind-merge';
-import type { IClientCardProps } from './types';
+import { IClientCardProps } from './types';
 import { useTranslation } from 'react-i18next';
 import { formatCurrency } from '~/utils/currency';
 import PlusIcon from '~/assets/icons/plus.svg';

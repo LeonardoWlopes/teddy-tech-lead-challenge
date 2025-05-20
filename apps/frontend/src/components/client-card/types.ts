@@ -1,4 +1,4 @@
-import type { IClient } from '~/interfaces/client';
+import { IClient } from '~/interfaces/client';
 
 export interface IClientCardProps {
 	client: IClient;

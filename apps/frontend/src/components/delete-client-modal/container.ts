@@ -1,4 +1,4 @@
-import type { IDeleteClientModalProps } from './types';
+import { IDeleteClientModalProps } from './types';
 import { useDeleteClient } from '~/services/clients';
 import { queryClient } from '~/providers/query-provider';
 import { EQueryKeys } from '~/enums/query';

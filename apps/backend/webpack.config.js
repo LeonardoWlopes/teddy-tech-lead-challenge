@@ -1,16 +1,19 @@
-import { swcDefaultsFactory } from '@nestjs/cli/lib/compiler/defaults/swc-defaults';
+//@eslint-disable
 
-const swcDefaultConfig = swcDefaultsFactory().swcOptions;
+const swcDefaultConfig =
+	require('@nestjs/cli/lib/compiler/defaults/swc-defaults').swcDefaultsFactory().swcOptions;
 
-export const module = {
-	rules: [
-		{
-			test: /\.ts$/,
-			exclude: /node_modules/,
-			use: {
-				loader: 'swc-loader',
-				options: swcDefaultConfig,
+module.exports = {
+	module: {
+		rules: [
+			{
+				test: /\.ts$/,
+				exclude: /node_modules/,
+				use: {
+					loader: 'swc-loader',
+					options: swcDefaultConfig,
+				},
 			},
-		},
-	],
+		],
+	},
 };

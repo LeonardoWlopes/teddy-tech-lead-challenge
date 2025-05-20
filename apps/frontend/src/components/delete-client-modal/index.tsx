@@ -1,6 +1,6 @@
 import { Trans, useTranslation } from 'react-i18next';
 import { Modal } from '../modal';
-import type { IDeleteClientModalProps } from './types';
+import { IDeleteClientModalProps } from './types';
 import { useDeleteClientModalContainer } from './container';
 import { Button } from '../button';
 

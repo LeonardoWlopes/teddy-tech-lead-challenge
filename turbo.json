@@ -1,7 +1,6 @@
 {
 	"$schema": "https://turborepo.com/schema.json",
 	"ui": "tui",
-	"globalEnv": ["DEV"],
 	"tasks": {
 		"build": {
 			"dependsOn": ["^build"],
@@ -9,12 +8,10 @@
 			"outputs": []
 		},
 		"lint": {
-			"dependsOn": ["^lint"],
-			"cache": false
+			"dependsOn": ["^lint"]
 		},
 		"check-types": {
-			"dependsOn": ["^check-types"],
-			"cache": false
+			"dependsOn": ["^check-types"]
 		},
 		"dev": {
 			"cache": false,
