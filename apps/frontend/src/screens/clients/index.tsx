@@ -4,8 +4,6 @@ import { Loading } from '~/components/loading';
 import { ClientCard } from '~/components/client-card';
 import { Button } from '~/components/button';
 import { Pagination } from '~/components/pagination';
-import { memo } from 'react';
-import { IClientCardProps } from '~/components/client-card/types';
 import { ClientModal } from '~/components/client-modal';
 
 export default function ClientsScreen() {
@@ -34,7 +32,11 @@ export default function ClientsScreen() {
 
 	return (
 		<div className="flex flex-1 flex-col">
-			<ClientModal isOpen={isFormOpen} onRequestClose={handleCloseModal} />
+			<ClientModal
+				isOpen={isFormOpen}
+				onRequestClose={handleCloseModal}
+				client={clientToEdit}
+			/>
 
 			<div className="mb-3 flex items-center justify-between">
 				<p className="text-lg font-normal">
@@ -68,7 +70,7 @@ export default function ClientsScreen() {
 
 			<div className="mb-5 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
 				{data?.items.map((client) => (
-					<RenderItem
+					<ClientCard
 						key={client.id}
 						onEdit={() => handleOpenModal(client)}
 						client={client}
@@ -89,12 +91,3 @@ export default function ClientsScreen() {
 		</div>
 	);
 }
-
-const RenderItem = memo(
-	(props: IClientCardProps) => {
-		return <ClientCard {...props} />;
-	},
-	(prevProps, nextProps) => {
-		return prevProps.client.id === nextProps.client.id;
-	},
-);

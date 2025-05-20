@@ -9,6 +9,9 @@ import { IClientModalProps } from './types';
 import { usePatchClient, usePostClient } from '~/services/clients';
 import { queryClient } from '~/providers/query-provider';
 import { EQueryKeys } from '~/enums/query';
+import { useEffect } from 'react';
+import { sanitizeNumberToCurrency } from '~/utils/number';
+import { formatCurrency } from '~/utils/currency';
 
 export function useClientModalContainer({ client, onRequestClose }: IClientModalProps) {
 	const { t } = useTranslation('client_modal');
@@ -17,13 +20,8 @@ export function useClientModalContainer({ client, onRequestClose }: IClientModal
 
 	const { mutateAsync: updateAsync, isPending: isUpdatingClient } = usePatchClient();
 
-	const { control, handleSubmit, reset } = useForm<IClientModalForm>({
+	const { control, handleSubmit, setValue, reset } = useForm<IClientModalForm>({
 		resolver: zodResolver(clientModalSchema),
-		defaultValues: {
-			name: client?.name || '',
-			salary: client?.salary || 0,
-			company: client?.companyValue || 0,
-		},
 	});
 
 	const isLoading = isCreatingClient || isUpdatingClient;
@@ -35,7 +33,12 @@ export function useClientModalContainer({ client, onRequestClose }: IClientModal
 			const method = isEditMode ? updateAsync : createAsync;
 
 			try {
-				await method({ name, salary, companyValue: company, id: client?.id });
+				await method({
+					name,
+					salary: sanitizeNumberToCurrency(salary),
+					companyValue: sanitizeNumberToCurrency(company),
+					id: client?.id,
+				});
 
 				queryClient.invalidateQueries({ queryKey: [EQueryKeys.CLIENTS] });
 
@@ -62,6 +65,15 @@ export function useClientModalContainer({ client, onRequestClose }: IClientModal
 			devError('Error on validate client modal form', errors);
 		},
 	);
+
+	function setupForm() {
+		if (!client) return;
+
+		setValue('name', client.name);
+		setValue('salary', formatCurrency(client.salary));
+		setValue('company', formatCurrency(client.companyValue));
+	}
+	useEffect(setupForm, [client]);
 
 	return { control, submit, isEditMode, isLoading };
 }

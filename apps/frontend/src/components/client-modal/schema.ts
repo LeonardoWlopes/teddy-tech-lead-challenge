@@ -8,10 +8,12 @@ export const clientModalSchema = z.object({
 	}),
 	salary: z
 		.string({ required_error: t('errors:required') })
-		.transform((value) => sanitizeNumber(value))
-		.pipe(z.number().min(1, { message: t('errors:min', { min: 1 }) })),
+		.refine((value) => sanitizeNumber(value) >= 1, {
+			message: t('errors:min', { min: 1 }),
+		}),
 	company: z
 		.string({ required_error: t('errors:required') })
-		.transform((value) => sanitizeNumber(value))
-		.pipe(z.number().min(1, { message: t('errors:min', { min: 1 }) })),
+		.refine((value) => sanitizeNumber(value) >= 1, {
+			message: t('errors:min', { min: 1 }),
+		}),
 });
