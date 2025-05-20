@@ -1,5 +1,5 @@
-import { BaseEntity, IBaseEntity } from '~/core/entities/base.entity';
-import { Currency } from '~/core/value-objects/currency.value-object';
+import { BaseEntity, IBaseEntity } from '~/domain/entities/base.entity';
+import { Currency } from '~/domain/value-objects/currency.value-object';
 import { Id } from '../value-objects/id.value-object';
 
 interface IClient extends IBaseEntity {

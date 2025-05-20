@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { ClientRepository } from '~/core/repositories/client.repository';
-import { Id } from '~/core/value-objects/id.value-object';
-import { NotFoundError } from '~/core/errors/not-found.error';
+import { ClientRepository } from '~/application/repositories/client.repository';
+import { Id } from '~/domain/value-objects/id.value-object';
+import { NotFoundError } from '~/domain/errors/not-found.error';
 
 @Injectable()
 export class DeleteClientUseCase {
