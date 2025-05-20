@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { IClientCardProps } from './types';
+import type { IClientCardProps } from './types';
 import { useClientStore } from '~/stores/client';
 import { useShallow } from 'zustand/shallow';
 

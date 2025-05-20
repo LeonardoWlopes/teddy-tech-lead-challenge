@@ -1,4 +1,4 @@
-import { IUser } from '~/interfaces/auth';
+import type { IUser } from '~/interfaces/auth';
 
 export function makeUserSut(overrides?: Partial<IUser>): IUser {
 	return {

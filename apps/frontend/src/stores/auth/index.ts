@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { IUser } from '~/interfaces/auth';
 
 interface IAuthState {
 	userName: string | null;
