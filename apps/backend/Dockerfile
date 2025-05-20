@@ -35,15 +35,24 @@ FROM base AS runner
 WORKDIR /app
 
 RUN addgroup --system --gid 1001 nodejs && \
-    adduser --system --uid 1001 backend
+    adduser --system --uid 1001 backend && \
+    mkdir -p /app/node_modules && \
+    chown -R backend:nodejs /app
 
-COPY --from=installer --chown=backend:nodejs /app/apps/backend/dist ./dist
 COPY --from=installer --chown=backend:nodejs /app/apps/backend/package.json ./package.json
-
 
 COPY --from=installer --chown=backend:nodejs /app/node_modules ./node_modules
 
+COPY --from=installer --chown=backend:nodejs /app/apps/backend/dist ./dist
+
 USER backend
 EXPOSE 3000
+
 ENV NODE_ENV=production
+ENV DB_HOST=db
+ENV DB_PORT=5432
+ENV DB_USERNAME=postgres
+ENV DB_PASSWORD=postgres
+ENV DB_NAME=postgres
+
 CMD ["node", "dist/main.js"]

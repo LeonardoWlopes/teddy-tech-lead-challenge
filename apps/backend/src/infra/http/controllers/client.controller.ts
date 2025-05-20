@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { CreateClientUseCase } from '~/application/use-cases/client/create-client.use-case';
 import { CreateClientMapper } from '../mappers/create-client.mapper';
@@ -13,6 +14,7 @@ import { PaginationViewModel } from '~/application/view-models/pagination.view-m
 import { UpdateClientDto } from '~/application/dtos/client/update-client.dto';
 import { CreateClientDto } from '~/application/dtos/client/create-client.dto';
 
+@ApiTags('Clients')
 @Controller('clients')
 export class ClientController {
 	constructor(
@@ -22,6 +24,10 @@ export class ClientController {
 		private readonly deleteClient: DeleteClientUseCase,
 	) {}
 
+	@ApiOperation({ summary: 'Create a new client' })
+	@ApiResponse({ status: 201, description: 'Client successfully created' })
+	@ApiResponse({ status: 400, description: 'Invalid data' })
+	@ApiResponse({ status: 409, description: 'Client already exists' })
 	@Post()
 	async create(@Body() createClientDto: CreateClientDto) {
 		const client = CreateClientMapper.toDomain(createClientDto);
@@ -31,6 +37,15 @@ export class ClientController {
 		return ClientViewModel.toHTTP(response);
 	}
 
+	@ApiOperation({ summary: 'List clients' })
+	@ApiQuery({
+		name: 'limit',
+		required: false,
+		type: Number,
+		description: 'Number of items per page',
+	})
+	@ApiQuery({ name: 'page', required: false, type: Number, description: 'Page number' })
+	@ApiResponse({ status: 200, description: 'List of clients successfully retrieved' })
 	@Get()
 	async list(@Query() { limit, page }: PaginationDto) {
 		const pagination = new Pagination({
@@ -46,6 +61,10 @@ export class ClientController {
 		};
 	}
 
+	@ApiOperation({ summary: 'Update a client' })
+	@ApiParam({ name: 'id', description: 'Client ID' })
+	@ApiResponse({ status: 200, description: 'Client successfully updated' })
+	@ApiResponse({ status: 404, description: 'Client not found' })
 	@Patch(':id')
 	async update(@Param('id') id: string, @Body() updateClientDto: UpdateClientDto) {
 		const client = UpdateClientMapper.toDomain(updateClientDto, id);
@@ -55,6 +74,10 @@ export class ClientController {
 		return ClientViewModel.toHTTP(response);
 	}
 
+	@ApiOperation({ summary: 'Remove a client' })
+	@ApiParam({ name: 'id', description: 'Client ID' })
+	@ApiResponse({ status: 200, description: 'Client successfully removed' })
+	@ApiResponse({ status: 404, description: 'Client not found' })
 	@Delete(':id')
 	remove(@Param('id') id: string) {
 		return this.deleteClient.execute(id);
