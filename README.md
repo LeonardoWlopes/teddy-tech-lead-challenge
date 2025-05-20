@@ -12,9 +12,9 @@ Access the live demo of this application at: [https://teddy.leonardolopes.tech](
 
 ## Videos
 
-- [Parte 1](https://www.loom.com/share/530fe18aa57c417daebc39aa24ddefcb)
-- [Parte 2](https://www.loom.com/share/2243ddab76d04abf9557e7d22986cff7)
-- [Parte 3](https://www.loom.com/share/98961718b3e14e38bc0f660c3a534ea7)
+https://www.loom.com/share/530fe18aa57c417daebc39aa24ddefcb
+https://www.loom.com/share/2243ddab76d04abf9557e7d22986cff7
+https://www.loom.com/share/98961718b3e14e38bc0f660c3a534ea7
 
 ## Project Structure
 
