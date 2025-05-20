@@ -26,12 +26,12 @@ export const useClientStore = create<IClientStore>()(
 			...DEFAULT_STATE,
 			set: (state) => set(state),
 			reset: () => set(DEFAULT_STATE),
-			add: (client) =>
+			add: (newClient) =>
 				set((state) => {
-					const exists = state.clients.some((client) => client.id === client.id);
+					const exists = state.clients.some((client) => client.id === newClient.id);
 
 					if (exists) return state;
-					return { clients: [...state.clients, client] };
+					return { clients: [...state.clients, newClient] };
 				}),
 			update: (client) =>
 				set((state) => ({

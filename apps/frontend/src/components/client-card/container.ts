@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import type { IClientCardProps } from './types';
 import { useClientStore } from '~/stores/client';
 import { useShallow } from 'zustand/shallow';
@@ -10,17 +9,17 @@ export function useClientCardContainer({ client, onSelect, onEdit, onDelete }: I
 
 	const isSelected = selectedClientIds.includes(client.id);
 
-	const handleSelect = useCallback(() => {
+	function handleSelect() {
 		onSelect?.(client);
-	}, [client]);
+	}
 
-	const handleEdit = useCallback(() => {
+	function handleEdit() {
 		onEdit?.(client);
-	}, [client]);
+	}
 
-	const handleDelete = useCallback(() => {
+	function handleDelete() {
 		onDelete?.(client);
-	}, [client]);
+	}
 
 	return { handleSelect, handleEdit, handleDelete, isSelected };
 }
