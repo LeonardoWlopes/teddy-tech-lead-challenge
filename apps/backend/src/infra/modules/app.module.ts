@@ -1,9 +1,16 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { ClientModule } from './client.module';
-import { DatabaseModule } from './database.module';
+import { TypeOrmModule } from '../database/typeorm/typeorm.module';
 
 @Module({
-	imports: [DatabaseModule, ClientModule],
+	imports: [
+		ConfigModule.forRoot({
+			isGlobal: true,
+		}),
+		TypeOrmModule,
+		ClientModule,
+	],
 	controllers: [],
 	providers: [],
 })
