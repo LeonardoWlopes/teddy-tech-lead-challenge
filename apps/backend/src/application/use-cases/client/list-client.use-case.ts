@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { Client } from '~/core/entities/client.entity';
-import { ClientRepository } from '~/core/repositories/client.repository';
-import { Pagination } from '~/core/entities/pagination.entity';
+import { Client } from '~/domain/entities/client.entity';
+import { ClientRepository } from '~/application/repositories/client.repository';
+import { Pagination } from '~/domain/entities/pagination.entity';
 
 interface IListClientUseCaseResponse {
 	clients: Client[];

@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Client } from '~/core/entities/client.entity';
-import { ClientRepository } from '~/core/repositories/client.repository';
-import { Id } from '~/core/value-objects/id.value-object';
-import { NotFoundError } from '~/core/errors/not-found.error';
-import { ConflictError } from '~/core/errors/conflict.error';
+import { Client } from '~/domain/entities/client.entity';
+import { ClientRepository } from '~/application/repositories/client.repository';
+import { Id } from '~/domain/value-objects/id.value-object';
+import { NotFoundError } from '~/domain/errors/not-found.error';
+import { ConflictError } from '~/domain/errors/conflict.error';
 
 @Injectable()
 export class UpdateClientUseCase {

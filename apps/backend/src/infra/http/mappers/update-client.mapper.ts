@@ -1,7 +1,7 @@
-import { Client } from '~/core/entities/client.entity';
-import { Currency } from '~/core/value-objects/currency.value-object';
-import { UpdateClientDto } from '../dtos/update-client.dto';
-import { Id } from '~/core/value-objects/id.value-object';
+import { UpdateClientDto } from '~/application/dtos/client/update-client.dto';
+import { Client } from '~/domain/entities/client.entity';
+import { Currency } from '~/domain/value-objects/currency.value-object';
+import { Id } from '~/domain/value-objects/id.value-object';
 
 export class UpdateClientMapper {
 	static toDomain(client: UpdateClientDto, id?: string): Client {
