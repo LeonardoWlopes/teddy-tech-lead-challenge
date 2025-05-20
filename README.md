@@ -2,6 +2,28 @@
 
 This is a monorepo application built with modern web technologies. The repository contains both backend and frontend applications, configured to work together seamlessly.
 
+# Teddy Tech Lead Challenge
+
+This is a monorepo application built with modern web technologies. The repository contains both backend and frontend applications, configured to work together seamlessly.
+
+## Live Preview
+
+Access the live demo of this application at: [https://teddy.leonardolopes.tech](https://teddy.leonardolopes.tech)
+
+## Videos
+
+- [Parte 1](https://www.loom.com/share/530fe18aa57c417daebc39aa24ddefcb)
+- [Parte 2](https://www.loom.com/share/2243ddab76d04abf9557e7d22986cff7)
+- [Parte 3](https://www.loom.com/share/98961718b3e14e38bc0f660c3a534ea7)
+
+## Project Structure
+
+This project is structured as a monorepo using [Turborepo](https://turborepo.com/) and [PNPM](https://pnpm.io/) workspaces:
+
+## Live Preview
+
+Access the live demo of this application at: [https://teddy.leonardolopes.tech](https://teddy.leonardolopes.tech)
+
 ## Project Structure
 
 This project is structured as a monorepo using [Turborepo](https://turborepo.com/) and [PNPM](https://pnpm.io/) workspaces:

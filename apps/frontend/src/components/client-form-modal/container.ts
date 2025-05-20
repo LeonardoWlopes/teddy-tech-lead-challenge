@@ -68,8 +68,8 @@ export function useClientFormModalContainer({ client, onRequestClose }: IClientF
 
 	function setupForm() {
 		setValue('name', client?.name || '');
-		setValue('salary', formatCurrency(client?.salary || 0));
-		setValue('company', formatCurrency(client?.companyValue || 0));
+		if (client?.salary) setValue('salary', formatCurrency(client.salary));
+		if (client?.companyValue) setValue('company', formatCurrency(client.companyValue));
 	}
 	useEffect(setupForm, [client]);
 
