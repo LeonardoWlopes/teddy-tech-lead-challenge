@@ -2,10 +2,10 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestj
 
 import { CreateClientUseCase } from '~/application/use-cases/client/create-client.use-case';
 import { CreateClientMapper } from '../mappers/create-client.mapper';
-import { PaginationDto } from '~/infra/common/dtos/pagination.dto';
+import { PaginationDto } from '~/application/dtos/pagination.dto';
 import { ListClientUseCase } from '~/application/use-cases/client/list-client.use-case';
 import { Pagination } from '~/domain/entities/pagination.entity';
-import { DeleteClientUseCase } from '~/application/use-cases/client/delete-client.use';
+import { DeleteClientUseCase } from '~/application/use-cases/client/delete-client.use-case';
 import { UpdateClientMapper } from '../mappers/update-client.mapper';
 import { UpdateClientUseCase } from '~/application/use-cases/client/update-client.use-case';
 import { ClientViewModel } from '~/application/view-models/client.view-model';

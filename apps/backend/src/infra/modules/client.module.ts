@@ -3,7 +3,7 @@ import { CreateClientUseCase } from '~/application/use-cases/client/create-clien
 import { ListClientUseCase } from '~/application/use-cases/client/list-client.use-case';
 import { ClientController } from '../http/controllers/client.controller';
 import { UpdateClientUseCase } from '~/application/use-cases/client/update-client.use-case';
-import { DeleteClientUseCase } from '~/application/use-cases/client/delete-client.use';
+import { DeleteClientUseCase } from '~/application/use-cases/client/delete-client.use-case';
 
 @Module({
 	controllers: [ClientController],
