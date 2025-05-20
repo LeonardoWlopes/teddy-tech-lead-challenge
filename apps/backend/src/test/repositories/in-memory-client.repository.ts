@@ -1,6 +1,6 @@
-import { Client } from '~/core/entities/client.entity';
-import { Pagination } from '~/core/entities/pagination.entity';
-import { ClientRepository } from '~/core/repositories/client.repository';
+import { Client } from '~/domain/entities/client.entity';
+import { Pagination } from '~/domain/entities/pagination.entity';
+import { ClientRepository } from '~/application/repositories/client.repository';
 
 export class InMemoryClientRepository implements ClientRepository {
 	private clients: Client[] = [];

@@ -1,4 +1,4 @@
-import { Client } from '../entities/client.entity';
+import { Client } from '~/domain/entities/client.entity';
 
 export class ClientViewModel {
 	static toHTTP(client: Client) {

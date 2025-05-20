@@ -1,16 +1,17 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
-import { CreateClientDto } from '../dtos/create-client.dto';
-import { UpdateClientDto } from '../dtos/update-client.dto';
-import { CreateClientUseCase } from '~/core/use-cases/client/create-client.use-case';
+
+import { CreateClientUseCase } from '~/application/use-cases/client/create-client.use-case';
 import { CreateClientMapper } from '../mappers/create-client.mapper';
-import { ClientViewModel } from '~/core/view-models/client.view-model';
-import { PaginationDto } from '~/infra/common/dtos/pagination.dto';
-import { ListClientUseCase } from '~/core/use-cases/client/list-client.use-case';
-import { Pagination } from '~/core/entities/pagination.entity';
-import { PaginationViewModel } from '~/core/view-models/pagination.view-model';
-import { DeleteClientUseCase } from '~/core/use-cases/client/delete-client.use';
+import { PaginationDto } from '~/application/dtos/pagination.dto';
+import { ListClientUseCase } from '~/application/use-cases/client/list-client.use-case';
+import { Pagination } from '~/domain/entities/pagination.entity';
+import { DeleteClientUseCase } from '~/application/use-cases/client/delete-client.use-case';
 import { UpdateClientMapper } from '../mappers/update-client.mapper';
-import { UpdateClientUseCase } from '~/core/use-cases/client/update-client.use-case';
+import { UpdateClientUseCase } from '~/application/use-cases/client/update-client.use-case';
+import { ClientViewModel } from '~/application/view-models/client.view-model';
+import { PaginationViewModel } from '~/application/view-models/pagination.view-model';
+import { UpdateClientDto } from '~/application/dtos/client/update-client.dto';
+import { CreateClientDto } from '~/application/dtos/client/create-client.dto';
 
 @Controller('clients')
 export class ClientController {
