@@ -14,7 +14,7 @@ export function Menu({ isMenuOpen, toggleIsMenuOpen }: IMenuProps) {
 		if (isMenuOpen) toggleIsMenuOpen();
 	}, [isMenuOpen]);
 
-	useOnClickOutside(menuRef, handleCloseMenu);
+	useOnClickOutside(menuRef, handleCloseMenu, isMenuOpen);
 
 	return (
 		<div

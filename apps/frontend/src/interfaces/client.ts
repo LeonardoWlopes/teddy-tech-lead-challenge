@@ -5,3 +5,7 @@ export interface IClient extends IBaseEntity {
 	name: string;
 	salary: number;
 }
+
+export interface IClientRequest extends Omit<IClient, keyof IBaseEntity> {
+	id?: string;
+}

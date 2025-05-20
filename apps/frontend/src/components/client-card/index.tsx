@@ -5,9 +5,22 @@ import { formatCurrency } from '~/utils/currency';
 import PlusIcon from '~/assets/icons/plus.svg';
 import PencilIcon from '~/assets/icons/pencil.svg';
 import TrashIcon from '~/assets/icons/trash.svg';
+import { useCallback } from 'react';
 
-export function ClientCard({ client, className }: IClientCardProps) {
+export function ClientCard({ client, className, onSelect, onEdit, onDelete }: IClientCardProps) {
 	const { t } = useTranslation('client_card');
+
+	const handleSelect = useCallback(() => {
+		onSelect?.(client);
+	}, [client]);
+
+	const handleEdit = useCallback(() => {
+		onEdit?.(client);
+	}, [client]);
+
+	const handleDelete = useCallback(() => {
+		onDelete?.(client);
+	}, [client]);
 
 	return (
 		<div
@@ -27,11 +40,20 @@ export function ClientCard({ client, className }: IClientCardProps) {
 			</span>
 
 			<div className="flex w-full items-center justify-between gap-2">
-				<PlusIcon className="h-5 w-5 cursor-pointer active:opacity-80" />
+				<PlusIcon
+					className="h-5 w-5 cursor-pointer active:opacity-80"
+					onClick={handleSelect}
+				/>
 
-				<PencilIcon className="h-5 w-5 cursor-pointer active:opacity-80" />
+				<PencilIcon
+					className="h-5 w-5 cursor-pointer active:opacity-80"
+					onClick={handleEdit}
+				/>
 
-				<TrashIcon className="h-5 w-5 cursor-pointer text-red-500 active:opacity-80" />
+				<TrashIcon
+					className="h-5 w-5 cursor-pointer text-red-500 active:opacity-80"
+					onClick={handleDelete}
+				/>
 			</div>
 		</div>
 	);

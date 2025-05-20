@@ -1,10 +1,10 @@
-import { UseQueryResult, useQuery } from '@tanstack/react-query';
+import { UseMutationResult, UseQueryResult, useMutation, useQuery } from '@tanstack/react-query';
 
 import { api } from './api';
 import { EQueryKeys } from '~/enums/query';
 import { IError } from '~/interfaces/error';
 import { IPaginatedResponse, IPaginationRequest } from '~/interfaces/common';
-import { IClient } from '~/interfaces/client';
+import { IClient, IClientRequest } from '~/interfaces/client';
 import { buildUrl } from '~/utils/url';
 
 export function useGetClients(
@@ -19,6 +19,26 @@ export function useGetClients(
 			});
 
 			const response = await api.get(url);
+
+			return response.data;
+		},
+	});
+}
+
+export function usePostClient(): UseMutationResult<void, IError, IClientRequest> {
+	return useMutation({
+		mutationFn: async (data: IClientRequest) => {
+			const response = await api.post('/clients', data);
+
+			return response.data;
+		},
+	});
+}
+
+export function usePatchClient(): UseMutationResult<void, IError, IClientRequest> {
+	return useMutation({
+		mutationFn: async (data: IClientRequest) => {
+			const response = await api.patch(`/clients/${data.id}`, data);
 
 			return response.data;
 		},

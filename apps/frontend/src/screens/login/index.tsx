@@ -13,7 +13,7 @@ export default function LoginScreen() {
 			<form className="flex w-full flex-col gap-5" onSubmit={handleLogin}>
 				<h1 className="text-4xl font-normal text-black">{t('welcome')}</h1>
 
-				<Input ref={inputRef} className="w-full" placeholder={t('input')} />
+				<Input ref={inputRef} className="w-full" size="lg" placeholder={t('input')} />
 
 				<Button className="w-full" size="lg" type="submit">
 					{t('button')}

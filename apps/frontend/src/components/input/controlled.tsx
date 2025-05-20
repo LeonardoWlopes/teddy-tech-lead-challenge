@@ -13,7 +13,7 @@ function ControlledInput<T extends FieldValues>({
 		<Controller
 			name={name}
 			control={control}
-			render={({ field: { onChange, onBlur, value, ref }, formState: { errors } }) => {
+			render={({ field: { onChange, onBlur, value, ref } }) => {
 				return (
 					<Input
 						ref={ref}
@@ -27,7 +27,6 @@ function ControlledInput<T extends FieldValues>({
 						}}
 						onBlur={onBlur}
 						value={value || ''}
-						error={errors[name]?.message?.toString()}
 						name={name}
 						{...rest}
 					/>

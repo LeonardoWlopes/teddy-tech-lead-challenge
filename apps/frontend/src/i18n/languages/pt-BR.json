@@ -21,5 +21,20 @@
 	"client_card": {
 		"salary": "Salário",
 		"company": "Empresa"
+	},
+	"client_modal": {
+		"edit": "Editar cliente",
+		"create": "Criar cliente",
+		"name": "Digite o nome",
+		"salary": "Digite o salário",
+		"company": "Digite o valor da empresa",
+		"invalid_form": "Formulário inválido",
+		"success_create": "Cliente criado com sucesso",
+		"success_update": "Cliente atualizado com sucesso"
+	},
+	"errors": {
+		"required": "Campo obrigatório",
+		"min": "O valor mínimo é {{min}}",
+		"invalid": "Valor inválido"
 	}
 }

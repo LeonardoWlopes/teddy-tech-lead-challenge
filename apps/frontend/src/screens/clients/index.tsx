@@ -4,12 +4,25 @@ import { Loading } from '~/components/loading';
 import { ClientCard } from '~/components/client-card';
 import { Button } from '~/components/button';
 import { Pagination } from '~/components/pagination';
+import { memo } from 'react';
+import { IClientCardProps } from '~/components/client-card/types';
+import { ClientModal } from '~/components/client-modal';
 
 export default function ClientsScreen() {
 	const { t } = useTranslation('clients');
 
-	const { data, isLoadingClients, page, itemsPerPage, setPage, setItemsPerPage } =
-		useClientsContainer();
+	const {
+		data,
+		isLoadingClients,
+		page,
+		itemsPerPage,
+		setPage,
+		setItemsPerPage,
+		handleCloseModal,
+		handleOpenModal,
+		clientToEdit,
+		isFormOpen,
+	} = useClientsContainer();
 
 	if (isLoadingClients) {
 		return (
@@ -21,12 +34,14 @@ export default function ClientsScreen() {
 
 	return (
 		<div className="flex flex-1 flex-col">
+			<ClientModal isOpen={isFormOpen} onRequestClose={handleCloseModal} />
+
 			<div className="mb-3 flex items-center justify-between">
 				<p className="text-lg font-normal">
 					<Trans
 						t={t}
 						i18nKey="list_count"
-						values={{ count: data?.metadata.total }}
+						values={{ count: data?.metadata.total || 0 }}
 						components={[<strong className="ml-1" />]}
 					/>
 				</p>
@@ -52,10 +67,16 @@ export default function ClientsScreen() {
 			</div>
 
 			<div className="mb-5 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-				{data?.items.map((client) => <ClientCard key={client.id} client={client} />)}
+				{data?.items.map((client) => (
+					<RenderItem
+						key={client.id}
+						onEdit={() => handleOpenModal(client)}
+						client={client}
+					/>
+				))}
 			</div>
 
-			<Button className="mb-5" variant={'neutral'}>
+			<Button className="mt-auto mb-5" onClick={() => handleOpenModal()} variant={'neutral'}>
 				{t('create')}
 			</Button>
 
@@ -68,3 +89,12 @@ export default function ClientsScreen() {
 		</div>
 	);
 }
+
+const RenderItem = memo(
+	(props: IClientCardProps) => {
+		return <ClientCard {...props} />;
+	},
+	(prevProps, nextProps) => {
+		return prevProps.client.id === nextProps.client.id;
+	},
+);
