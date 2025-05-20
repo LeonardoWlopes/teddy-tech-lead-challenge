@@ -20,7 +20,8 @@
 		".editorconfig": "eslint.*, .prettierrc.json, lefthook*, commitlint*, eslint.config.mjs",
 		".env": ".env*",
 		".gitignore": ".git*",
-		"package.json": "tsconfig*, pnpm-lock*, .nvmrc, .releaserc, tailwind*, postcss*, next.config.ts, vite.config.ts, vitest.config.mts, nginx.conf"
+		"package.json": "tsconfig*, pnpm-lock*, .nvmrc, .releaserc, tailwind*, postcss*, next.config.ts, vite.config.ts, vitest.config.mts, nginx.conf",
+		"README.md": "*.md"
 	},
 	"i18n-ally.keystyle": "flat",
 	"i18n-ally.localesPaths": [
