@@ -10,7 +10,7 @@ export const HEADER_NAVIGATION_MOCK = [
 	},
 	{
 		label: t('header:selected_clients'),
-		href: '/clients/selected',
+		href: '/selected-clients',
 	},
 ];
 

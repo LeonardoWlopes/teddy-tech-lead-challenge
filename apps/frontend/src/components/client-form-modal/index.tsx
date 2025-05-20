@@ -1,17 +1,17 @@
 import { useTranslation } from 'react-i18next';
 import { Modal } from '../modal';
-import { IClientModalProps } from './types';
-import { useClientModalContainer } from './container';
+import { IClientFormModalProps } from './types';
+import { useClientFormModalContainer } from './container';
 import { ControlledInput } from '../input/controlled';
 import { Button } from '../button';
 import { maskCurrency } from '~/utils/mask';
 
-export function ClientModal(props: IClientModalProps) {
+export function ClientFormModal(props: IClientFormModalProps) {
 	const { isOpen, onRequestClose } = props;
 
-	const { t } = useTranslation('client_modal');
+	const { t } = useTranslation('client_form_modal');
 
-	const { control, submit, isEditMode, isLoading } = useClientModalContainer(props);
+	const { control, submit, isEditMode, isLoading } = useClientFormModalContainer(props);
 
 	return (
 		<Modal

@@ -1,9 +1,10 @@
 import { Outlet } from 'react-router';
 import { Header } from '../header';
 import { Menu } from '../menu';
-import { useReducer } from 'react';
+import { Suspense, useReducer } from 'react';
+import { LoadingScreen } from '~/screens/loading';
 
-export function Layout() {
+export default function Layout() {
 	const [isMenuOpen, toggleIsMenuOpen] = useReducer((state) => !state, false);
 
 	return (
@@ -14,7 +15,9 @@ export function Layout() {
 				<Header toggleIsMenuOpen={toggleIsMenuOpen} />
 
 				<main className="flex h-full flex-col overflow-y-auto px-30 py-8">
-					<Outlet />
+					<Suspense fallback={<LoadingScreen />}>
+						<Outlet />
+					</Suspense>
 				</main>
 			</div>
 		</div>

@@ -3,8 +3,9 @@ import { Navigate, RouterProvider, createBrowserRouter } from 'react-router';
 import { useAuthStore } from './stores/auth';
 import { useShallow } from 'zustand/shallow';
 import { LoadingScreen } from './screens/loading';
-import { Layout } from './components/layout';
 
+const Layout = lazy(() => import('./components/layout'));
+const SelectedClientsScreen = lazy(() => import('./screens/selected-clients'));
 const LoginScreen = lazy(() => import('./screens/login'));
 const ClientsScreen = lazy(() => import('./screens/clients'));
 
@@ -34,6 +35,10 @@ export function Router() {
 				{
 					path: '/clients',
 					element: <ClientsScreen />,
+				},
+				{
+					path: '/selected-clients',
+					element: <SelectedClientsScreen />,
 				},
 				{
 					path: '*',

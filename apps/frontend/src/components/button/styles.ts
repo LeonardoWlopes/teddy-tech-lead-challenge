@@ -1,7 +1,7 @@
 import { cva } from 'class-variance-authority';
 
 export const buttonVariants = cva(
-	'cursor-pointer rounded-sm font-bold  active:opacity-80 border-2 border-transparent',
+	'cursor-pointer rounded-sm font-bold px-4 active:opacity-80 border-2 border-transparent',
 	{
 		variants: {
 			variant: {

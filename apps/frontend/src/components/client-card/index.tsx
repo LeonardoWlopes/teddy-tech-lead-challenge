@@ -5,27 +5,23 @@ import { formatCurrency } from '~/utils/currency';
 import PlusIcon from '~/assets/icons/plus.svg';
 import PencilIcon from '~/assets/icons/pencil.svg';
 import TrashIcon from '~/assets/icons/trash.svg';
-import { useCallback } from 'react';
+import MinusIcon from '~/assets/icons/minus.svg';
+import { useClientCardContainer } from './container';
 
-export function ClientCard({ client, className, onSelect, onEdit, onDelete }: IClientCardProps) {
+export function ClientCard(props: IClientCardProps) {
+	const { client, className, onSelect, onEdit, onDelete } = props;
+
 	const { t } = useTranslation('client_card');
 
-	const handleSelect = useCallback(() => {
-		onSelect?.(client);
-	}, [client]);
+	const { handleSelect, handleEdit, handleDelete, isSelected } = useClientCardContainer(props);
 
-	const handleEdit = useCallback(() => {
-		onEdit?.(client);
-	}, [client]);
-
-	const handleDelete = useCallback(() => {
-		onDelete?.(client);
-	}, [client]);
+	const DeleteIcon = isSelected ? MinusIcon : TrashIcon;
 
 	return (
 		<div
 			className={twMerge(
-				'flex flex-col items-center justify-center gap-2.5 bg-white p-4 shadow-md',
+				'flex flex-col items-center justify-center gap-2.5 rounded border border-transparent bg-white p-4 shadow-md',
+				isSelected && 'border-zinc-300 bg-gray-100',
 				className,
 			)}
 		>
@@ -40,20 +36,32 @@ export function ClientCard({ client, className, onSelect, onEdit, onDelete }: IC
 			</span>
 
 			<div className="flex w-full items-center justify-between gap-2">
-				<PlusIcon
-					className="h-5 w-5 cursor-pointer active:opacity-80"
-					onClick={handleSelect}
-				/>
+				<div className="h-5 w-5">
+					{!isSelected && onSelect && (
+						<PlusIcon
+							className="h-5 w-5 cursor-pointer active:opacity-80"
+							onClick={handleSelect}
+						/>
+					)}
+				</div>
 
-				<PencilIcon
-					className="h-5 w-5 cursor-pointer active:opacity-80"
-					onClick={handleEdit}
-				/>
+				<div className="h-5 w-5">
+					{onEdit && (
+						<PencilIcon
+							className="h-5 w-5 cursor-pointer active:opacity-80"
+							onClick={handleEdit}
+						/>
+					)}
+				</div>
 
-				<TrashIcon
-					className="h-5 w-5 cursor-pointer text-red-500 active:opacity-80"
-					onClick={handleDelete}
-				/>
+				<div className="h-5 w-5">
+					{onDelete && (
+						<DeleteIcon
+							className="h-5 w-5 cursor-pointer text-red-500 active:opacity-80"
+							onClick={handleDelete}
+						/>
+					)}
+				</div>
 			</div>
 		</div>
 	);

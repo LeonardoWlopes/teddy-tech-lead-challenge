@@ -1,11 +1,11 @@
 import { useForm } from 'react-hook-form';
-import { IClientModalForm } from './types';
+import { IClientFormModalForm } from './types';
 import { clientModalSchema } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { devError } from '~/utils/log';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
-import { IClientModalProps } from './types';
+import { IClientFormModalProps } from './types';
 import { usePatchClient, usePostClient } from '~/services/clients';
 import { queryClient } from '~/providers/query-provider';
 import { EQueryKeys } from '~/enums/query';
@@ -13,14 +13,14 @@ import { useEffect } from 'react';
 import { sanitizeNumberToCurrency } from '~/utils/number';
 import { formatCurrency } from '~/utils/currency';
 
-export function useClientModalContainer({ client, onRequestClose }: IClientModalProps) {
-	const { t } = useTranslation('client_modal');
+export function useClientFormModalContainer({ client, onRequestClose }: IClientFormModalProps) {
+	const { t } = useTranslation('client_form_modal');
 
 	const { mutateAsync: createAsync, isPending: isCreatingClient } = usePostClient();
 
 	const { mutateAsync: updateAsync, isPending: isUpdatingClient } = usePatchClient();
 
-	const { control, handleSubmit, setValue, reset } = useForm<IClientModalForm>({
+	const { control, handleSubmit, setValue, reset } = useForm<IClientFormModalForm>({
 		resolver: zodResolver(clientModalSchema),
 	});
 
@@ -40,7 +40,7 @@ export function useClientModalContainer({ client, onRequestClose }: IClientModal
 					id: client?.id,
 				});
 
-				queryClient.invalidateQueries({ queryKey: [EQueryKeys.CLIENTS] });
+				queryClient.refetchQueries({ queryKey: [EQueryKeys.CLIENTS] });
 
 				toast.success(isEditMode ? t('success_update') : t('success_create'));
 
@@ -67,11 +67,9 @@ export function useClientModalContainer({ client, onRequestClose }: IClientModal
 	);
 
 	function setupForm() {
-		if (!client) return;
-
-		setValue('name', client.name);
-		setValue('salary', formatCurrency(client.salary));
-		setValue('company', formatCurrency(client.companyValue));
+		setValue('name', client?.name || '');
+		setValue('salary', formatCurrency(client?.salary || 0));
+		setValue('company', formatCurrency(client?.companyValue || 0));
 	}
 	useEffect(setupForm, [client]);
 

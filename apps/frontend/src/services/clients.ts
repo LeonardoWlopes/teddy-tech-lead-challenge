@@ -6,6 +6,7 @@ import { IError } from '~/interfaces/error';
 import { IPaginatedResponse, IPaginationRequest } from '~/interfaces/common';
 import { IClient, IClientRequest } from '~/interfaces/client';
 import { buildUrl } from '~/utils/url';
+import { useClientStore } from '~/stores/client';
 
 export function useGetClients(
 	props: IPaginationRequest,
@@ -35,10 +36,23 @@ export function usePostClient(): UseMutationResult<void, IError, IClientRequest>
 	});
 }
 
-export function usePatchClient(): UseMutationResult<void, IError, IClientRequest> {
+export function usePatchClient(): UseMutationResult<IClient, IError, IClientRequest> {
 	return useMutation({
 		mutationFn: async (data: IClientRequest) => {
-			const response = await api.patch(`/clients/${data.id}`, data);
+			const response = await api.patch<IClient>(`/clients/${data.id}`, data);
+
+			return response.data;
+		},
+		onSuccess: (client) => {
+			useClientStore.getState().update(client);
+		},
+	});
+}
+
+export function useDeleteClient(): UseMutationResult<void, IError, string> {
+	return useMutation({
+		mutationFn: async (id: string) => {
+			const response = await api.delete(`/clients/${id}`);
 
 			return response.data;
 		},

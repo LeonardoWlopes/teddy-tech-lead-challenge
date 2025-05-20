@@ -4,7 +4,8 @@ import { Loading } from '~/components/loading';
 import { ClientCard } from '~/components/client-card';
 import { Button } from '~/components/button';
 import { Pagination } from '~/components/pagination';
-import { ClientModal } from '~/components/client-modal';
+import { ClientFormModal } from '~/components/client-form-modal';
+import { DeleteClientModal } from '~/components/delete-client-modal';
 
 export default function ClientsScreen() {
 	const { t } = useTranslation('clients');
@@ -18,8 +19,11 @@ export default function ClientsScreen() {
 		setItemsPerPage,
 		handleCloseModal,
 		handleOpenModal,
-		clientToEdit,
+		clientToHandle,
 		isFormOpen,
+		isDeleteModalOpen,
+		handleDeleteClient,
+		handleSelectClient,
 	} = useClientsContainer();
 
 	if (isLoadingClients) {
@@ -32,10 +36,16 @@ export default function ClientsScreen() {
 
 	return (
 		<div className="flex flex-1 flex-col">
-			<ClientModal
+			<ClientFormModal
 				isOpen={isFormOpen}
 				onRequestClose={handleCloseModal}
-				client={clientToEdit}
+				client={clientToHandle}
+			/>
+
+			<DeleteClientModal
+				isOpen={isDeleteModalOpen}
+				onRequestClose={handleCloseModal}
+				client={clientToHandle}
 			/>
 
 			<div className="mb-3 flex items-center justify-between">
@@ -73,6 +83,8 @@ export default function ClientsScreen() {
 					<ClientCard
 						key={client.id}
 						onEdit={() => handleOpenModal(client)}
+						onDelete={() => handleDeleteClient(client)}
+						onSelect={() => handleSelectClient(client)}
 						client={client}
 					/>
 				))}
