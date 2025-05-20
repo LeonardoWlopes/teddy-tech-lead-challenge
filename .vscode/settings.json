@@ -17,10 +17,10 @@
 	"editor.tabSize": 4,
 	"explorer.fileNesting.enabled": true,
 	"explorer.fileNesting.patterns": {
-		".editorconfig": "eslint.*, .prettierrc.json, lefthook*, commitlint*, .lintstagedrc",
+		".editorconfig": "eslint.*, .prettierrc.json, lefthook*, commitlint*, eslint.config.mjs",
 		".env": ".env*",
 		".gitignore": ".git*",
-		"package.json": "tsconfig*, pnpm-lock*, .nvmrc, .releaserc, tailwind*, postcss*, next.config.ts, vite.config.ts, vitest.config.mts"
+		"package.json": "tsconfig*, pnpm-lock*, .nvmrc, .releaserc, tailwind*, postcss*, next.config.ts, vite.config.ts, vitest.config.mts, nginx.conf"
 	},
 	"i18n-ally.keystyle": "flat",
 	"i18n-ally.localesPaths": [
