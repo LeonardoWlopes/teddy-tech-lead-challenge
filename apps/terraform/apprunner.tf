@@ -15,6 +15,27 @@ resource "aws_iam_role" "app_runner" {
   })
 }
 
+resource "aws_iam_role_policy" "app_runner" {
+  name = "${local.name_prefix}-app-runner-policy"
+  role = aws_iam_role.app_runner.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "ecr:GetAuthorizationToken",
+          "ecr:BatchCheckLayerAvailability",
+          "ecr:GetDownloadUrlForLayer",
+          "ecr:BatchGetImage"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
+}
+
 resource "aws_iam_role" "app_runner_instance" {
   name = "${local.name_prefix}-app-runner-instance-role"
 
@@ -56,12 +77,6 @@ resource "aws_iam_role_policy" "app_runner_instance" {
 resource "aws_iam_role_policy_attachment" "app_runner_ecr" {
   role       = aws_iam_role.app_runner.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSAppRunnerServicePolicyForECRAccess"
-}
-
-resource "aws_ssm_parameter" "db_password" {
-  name  = "DB_PASSWORD"
-  type  = "SecureString"
-  value = var.db_password
 }
 
 resource "aws_apprunner_service" "backend" {

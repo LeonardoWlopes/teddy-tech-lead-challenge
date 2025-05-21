@@ -46,3 +46,10 @@ variable "github_repository" {
   type        = string
   default     = "LeonardoWlopes/teddy-tech-lead-challenge"
 } 
+
+variable "frontend_domain" {
+  description = "Frontend domain name"
+  type        = string
+  default     = "teddy.leonardolopes.tech"
+}
+

@@ -64,29 +64,22 @@ resource "aws_iam_role_policy" "github_actions" {
       },
       {
         Effect = "Allow"
-        Action = "iam:PassRole"
-        Resource = aws_iam_role.app_runner.arn
-      }
-    ]
-  })
-}
-
-resource "aws_iam_role_policy" "app_runner" {
-  name = "${local.name_prefix}-app-runner-policy"
-  role = aws_iam_role.app_runner.id
-
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
+        Action = [
+          "s3:ListBucket",
+          "s3:GetObject",
+          "s3:PutObject",
+          "s3:DeleteObject",
+          "s3:GetBucketLocation"
+        ]
+        Resource = [
+          "arn:aws:s3:::${var.frontend_domain}",
+          "arn:aws:s3:::${var.frontend_domain}/*"
+        ]
+      },
       {
         Effect = "Allow"
-        Action = [
-          "ecr:GetAuthorizationToken",
-          "ecr:BatchCheckLayerAvailability",
-          "ecr:GetDownloadUrlForLayer",
-          "ecr:BatchGetImage"
-        ]
-        Resource = "*"
+        Action = "iam:PassRole"
+        Resource = aws_iam_role.app_runner.arn
       }
     ]
   })
