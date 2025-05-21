@@ -1,0 +1,80 @@
+name: Deploy Infrastructure
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "apps/terraform/**"
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+  issues: write
+
+jobs:
+  terraform:
+    name: "Deploy Infrastructure"
+    runs-on: ubuntu-latest
+    outputs:
+      frontend_bucket_name: ${{ steps.terraform_output.outputs.frontend_bucket_name }}
+      ecr_repository_url: ${{ steps.terraform_output.outputs.ecr_repository_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.5.7
+
+      - name: Terraform Init
+        working-directory: apps/terraform
+        run: terraform init
+
+      - name: Terraform Validate
+        working-directory: apps/terraform
+        run: terraform validate
+
+      - name: Terraform Plan
+        working-directory: apps/terraform
+        run: terraform plan -out=terraform.plan
+
+      - name: Terraform Apply
+        working-directory: apps/terraform
+        run: terraform apply -auto-approve terraform.plan
+
+      - name: Terraform Output
+        id: terraform_output
+        working-directory: apps/terraform
+        run: |
+          echo "frontend_bucket_name=$(terraform output -raw frontend_bucket_name)" >> $GITHUB_OUTPUT
+          echo "ecr_repository_url=$(terraform output -raw ecr_repository_url)" >> $GITHUB_OUTPUT
+
+  update-secrets:
+    name: "Update GitHub Secrets"
+    needs: [terraform]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update secrets
+        run: |
+          echo "Atualizando os secrets do GitHub Actions..."
+          echo "FRONTEND_BUCKET_NAME=${{ needs.terraform.outputs.frontend_bucket_name }}"
+          echo "IMAGE_NAME obtido da saída do ECR (truncado para segurança)"
+
+  trigger-ci:
+    name: "Trigger CI Pipeline"
+    needs: [update-secrets]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger CI workflow
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: ci.yml
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
