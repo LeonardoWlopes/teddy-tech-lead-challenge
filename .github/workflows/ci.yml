@@ -87,7 +87,7 @@ jobs:
 
       - name: Deploy frontend to S3
         run: |
-          aws s3 sync apps/frontend/dist/ s3://$(aws s3 ls | grep teddy | grep frontend | awk '{print $3}') --delete
+          aws s3 sync apps/frontend/dist/ s3://${{ secrets.FRONTEND_BUCKET_NAME }} --delete
 
   build-backend:
     name: "Build and Push Backend"
