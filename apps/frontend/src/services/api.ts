@@ -5,7 +5,7 @@ import { devLog } from '~/utils/log';
 import axios, { type AxiosInstance, type AxiosResponse } from 'axios';
 
 export const api: AxiosInstance = axios.create({
-	baseURL: env.BASE_URL,
+	baseURL: env.BACKEND_URL,
 	timeout: 1000 * 10, // 10 seconds
 	headers: {
 		Accept: 'application/json',

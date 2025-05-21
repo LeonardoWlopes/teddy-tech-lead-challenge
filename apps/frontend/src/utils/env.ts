@@ -4,12 +4,12 @@ import { z } from 'zod';
 import { t } from '~/i18n/config';
 
 const envSchema = z.object({
-	BASE_URL: z.string().url(),
+	BACKEND_URL: z.string().url(),
 	DEV: z.boolean().default(false),
 });
 
 const _env = envSchema.safeParse({
-	BASE_URL: import.meta.env.VITE_PUBLIC_BASE_URL,
+	BACKEND_URL: import.meta.env.VITE_PUBLIC_BACKEND_URL,
 	DEV: import.meta.env.DEV,
 });
 
