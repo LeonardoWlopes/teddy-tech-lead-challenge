@@ -5,7 +5,9 @@
 		}
 	],
 	"cSpell.words": [
-		"lefthook"
+		"github",
+		"lefthook",
+		"postgres"
 	],
 	"editor.formatOnSave": true,
 	"editor.defaultFormatter": "esbenp.prettier-vscode",

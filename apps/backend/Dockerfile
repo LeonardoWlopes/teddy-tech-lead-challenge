@@ -48,11 +48,4 @@ COPY --from=installer --chown=backend:nodejs /app/apps/backend/dist ./dist
 USER backend
 EXPOSE 3000
 
-ENV NODE_ENV=production
-ENV DB_HOST=db
-ENV DB_PORT=5432
-ENV DB_USERNAME=postgres
-ENV DB_PASSWORD=postgres
-ENV DB_NAME=postgres
-
 CMD ["node", "dist/main.js"]

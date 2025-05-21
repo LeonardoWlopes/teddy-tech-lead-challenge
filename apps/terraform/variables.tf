@@ -1,42 +1,48 @@
 variable "aws_region" {
-  description = "Região da AWS onde os recursos serão criados"
+  description = "AWS region where resources will be created"
   type        = string
   default     = "us-east-2"
 }
 
 variable "environment" {
-  description = "Ambiente de implantação (dev, staging, prod)"
+  description = "Deployment environment (dev, staging, prod)"
   type        = string
   default     = "dev"
 }
 
 variable "frontend_bucket_name" {
-  description = "Nome do bucket S3 para o frontend"
+  description = "S3 bucket name for the frontend"
   type        = string
   default     = "frontend"
 }
 
 variable "ecr_repository_name" {
-  description = "Nome do repositório ECR para as imagens Docker do backend"
+  description = "ECR repository name for backend Docker images"
   type        = string
   default     = "backend"
 }
 
 variable "db_name" {
-  description = "Nome do banco de dados PostgreSQL"
+  description = "PostgreSQL database name"
   type        = string
   default     = "teddy"
 }
 
 variable "db_username" {
-  description = "Nome de usuário para o banco de dados PostgreSQL"
+  description = "PostgreSQL database username"
   type        = string
   default     = "postgres"
 }
 
 variable "db_password" {
-  description = "Senha para o banco de dados PostgreSQL (use terraform.tfvars para definir em produção)"
+  description = "PostgreSQL database password (use terraform.tfvars to set in production)"
   type        = string
-  default     = "changeme123" # Não use isso em produção, defina em terraform.tfvars
+  default     = "changeme123" # Don't use this in production, set it in terraform.tfvars
   sensitive   = true
+}
+
+variable "github_repository" {
+  description = "GitHub repository name in 'owner/repo' format"
+  type        = string
+  default     = "LeonardoWlopes/teddy-tech-lead-challenge"
 } 

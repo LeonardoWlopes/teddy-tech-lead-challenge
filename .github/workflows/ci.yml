@@ -76,7 +76,7 @@ jobs:
         id: deploy
         uses: awslabs/amazon-app-runner-deploy@main
         with:
-          service: bills-backend
+          service: dev-backend
           image: ${{ steps.build.outputs.image }}
           access-role-arn: ${{ secrets.AWS_ROLE_TO_APP_RUNNER }}
           region: us-east-2
