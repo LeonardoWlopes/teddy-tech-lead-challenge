@@ -21,6 +21,8 @@
         "esbenp.prettier-vscode",
         "cipchk.cssrem",
         "bradlc.vscode-tailwindcss",
-        "vitest.explorer"
+        "vitest.explorer",
+        "hashicorp.terraform",
+        "4ops.terraform"
     ]
 }
