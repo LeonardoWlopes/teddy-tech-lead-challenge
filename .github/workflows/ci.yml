@@ -75,7 +75,7 @@ jobs:
         run: echo "${{ steps.login-ecr.outputs.registry }}" > /tmp/ecr-registry.txt
 
       - name: Upload ECR registry
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: ecr-registry
           path: /tmp/ecr-registry.txt
@@ -143,7 +143,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Download ECR registry
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v2
         with:
           name: ecr-registry
           path: /tmp
