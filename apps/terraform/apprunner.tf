@@ -42,7 +42,10 @@ resource "aws_iam_role_policy" "app_runner_instance" {
       {
         Effect = "Allow"
         Action = [
-          "secretsmanager:GetSecretValue"
+          "secretsmanager:GetSecretValue",
+          "ssm:GetParameters",
+          "ssm:GetParameter",
+          "ssm:GetParametersByPath"
         ]
         Resource = "*"
       }
@@ -53,6 +56,12 @@ resource "aws_iam_role_policy" "app_runner_instance" {
 resource "aws_iam_role_policy_attachment" "app_runner_ecr" {
   role       = aws_iam_role.app_runner.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSAppRunnerServicePolicyForECRAccess"
+}
+
+resource "aws_ssm_parameter" "db_password" {
+  name  = "DB_PASSWORD"
+  type  = "SecureString"
+  value = var.db_password
 }
 
 resource "aws_apprunner_service" "backend" {
@@ -66,13 +75,15 @@ resource "aws_apprunner_service" "backend" {
     image_repository {
       image_configuration {
         port = "3000"
-        runtime_environment_secrets = {
+        runtime_environment_variables = {
           NODE_ENV     = var.environment
           DB_HOST      = aws_db_instance.postgres.address
           DB_PORT      = aws_db_instance.postgres.port
           DB_NAME      = aws_db_instance.postgres.db_name
           DB_USERNAME  = aws_db_instance.postgres.username
-          DB_PASSWORD  = var.db_password
+        }
+        runtime_environment_secrets = {
+          DB_PASSWORD  = "DB_PASSWORD"
         }
       }
       image_identifier      = "${aws_ecr_repository.backend.repository_url}:latest"
