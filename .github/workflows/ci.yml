@@ -61,7 +61,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build container image
+      - name: Build and push container image
         id: build
         env:
           IMAGE_NAME: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.IMAGE_NAME}}
@@ -69,21 +69,3 @@ jobs:
           docker build -t $IMAGE_NAME:${{ steps.generate_tag.outputs.sha }} -f apps/backend/Dockerfile .
           docker tag $IMAGE_NAME:${{ steps.generate_tag.outputs.sha }} $IMAGE_NAME:latest
           docker push --all-tags $IMAGE_NAME
-          echo "image=$IMAGE_NAME:${{ steps.generate_tag.outputs.sha }}" >> $GITHUB_OUTPUT
-          echo "image_latest=$IMAGE_NAME:latest" >> $GITHUB_OUTPUT
-
-      - name: Deploy to app runner
-        id: deploy
-        uses: awslabs/amazon-app-runner-deploy@main
-        with:
-          service: dev-backend
-          image: ${{ steps.build.outputs.image }}
-          access-role-arn: ${{ secrets.AWS_ROLE_TO_APP_RUNNER }}
-          region: us-east-2
-          cpu: 1
-          memory: 2
-          port: 3000
-          wait-for-service-stability-seconds: 180
-
-      - name: App Runner check
-        run: echo "App Runner running... ${{ steps.deploy.outputs.service-url }}"
