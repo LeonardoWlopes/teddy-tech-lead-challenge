@@ -51,39 +51,9 @@ jobs:
             */*/node_modules
           key: ${{ runner.os }}-modules-${{ github.sha }}
 
-  aws-setup:
-    name: "AWS Configuration"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: Get ECR login
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
-
-      - name: Cache AWS config
-        uses: actions/cache@v3
-        with:
-          path: ~/.aws
-          key: aws-config-${{ github.sha }}
-
-      - name: Save ECR registry
-        run: echo "${{ steps.login-ecr.outputs.registry }}" > /tmp/ecr-registry.txt
-
-      - name: Upload ECR registry
-        uses: actions/upload-artifact@v2
-        with:
-          name: ecr-registry
-          path: /tmp/ecr-registry.txt
-          retention-days: 1
-
   build-frontend:
     name: "Build and Deploy Frontend"
-    needs: [setup, aws-setup]
+    needs: [setup]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -121,7 +91,7 @@ jobs:
 
   build-backend:
     name: "Build and Push Backend"
-    needs: [setup, aws-setup]
+    needs: [setup]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -142,19 +112,10 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Download ECR registry
-        uses: actions/download-artifact@v2
-        with:
-          name: ecr-registry
-          path: /tmp
-
-      - name: Set ECR registry variable
-        run: echo "ECR_REGISTRY=$(cat /tmp/ecr-registry.txt)" >> $GITHUB_ENV
-
       - name: Build and push container image
         id: build
         env:
-          IMAGE_NAME: ${{ env.ECR_REGISTRY }}/${{ secrets.IMAGE_NAME}}
+          IMAGE_NAME: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.IMAGE_NAME}}
         run: |
           docker build -t $IMAGE_NAME:${{ steps.generate_tag.outputs.sha }} -f apps/backend/Dockerfile .
           docker tag $IMAGE_NAME:${{ steps.generate_tag.outputs.sha }} $IMAGE_NAME:latest
