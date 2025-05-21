@@ -12,10 +12,9 @@ permissions:
   issues: write
 
 jobs:
-  build:
-    name: "Build and Push"
+  setup:
+    name: "Setup Dependencies"
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -43,7 +42,89 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - run: pnpm install
-      # - run: pnpm test
+
+      - name: Cache workspace
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-modules-${{ github.sha }}
+
+  aws-setup:
+    name: "AWS Configuration"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Get ECR login
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Cache AWS config
+        uses: actions/cache@v3
+        with:
+          path: ~/.aws
+          key: aws-config-${{ github.sha }}
+
+      - name: Save ECR registry
+        run: echo "${{ steps.login-ecr.outputs.registry }}" > /tmp/ecr-registry.txt
+
+      - name: Upload ECR registry
+        uses: actions/upload-artifact@v3
+        with:
+          name: ecr-registry
+          path: /tmp/ecr-registry.txt
+          retention-days: 1
+
+  build-frontend:
+    name: "Build and Deploy Frontend"
+    needs: [setup, aws-setup]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
+      - name: Restore workspace
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-modules-${{ github.sha }}
+
+      - name: Build frontend
+        run: pnpm turbo run build --filter=@repo/frontend
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Deploy frontend to S3
+        run: |
+          aws s3 sync apps/frontend/dist/ s3://$(aws s3 ls | grep teddy | grep frontend | awk '{print $3}') --delete
+
+  build-backend:
+    name: "Build and Push Backend"
+    needs: [setup, aws-setup]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
       - name: Generate tag
         id: generate_tag
@@ -61,10 +142,19 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
+      - name: Download ECR registry
+        uses: actions/download-artifact@v3
+        with:
+          name: ecr-registry
+          path: /tmp
+
+      - name: Set ECR registry variable
+        run: echo "ECR_REGISTRY=$(cat /tmp/ecr-registry.txt)" >> $GITHUB_ENV
+
       - name: Build and push container image
         id: build
         env:
-          IMAGE_NAME: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.IMAGE_NAME}}
+          IMAGE_NAME: ${{ env.ECR_REGISTRY }}/${{ secrets.IMAGE_NAME}}
         run: |
           docker build -t $IMAGE_NAME:${{ steps.generate_tag.outputs.sha }} -f apps/backend/Dockerfile .
           docker tag $IMAGE_NAME:${{ steps.generate_tag.outputs.sha }} $IMAGE_NAME:latest
