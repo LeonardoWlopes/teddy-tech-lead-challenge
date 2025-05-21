@@ -15,6 +15,41 @@ resource "aws_iam_role" "app_runner" {
   })
 }
 
+resource "aws_iam_role" "app_runner_instance" {
+  name = "${local.name_prefix}-app-runner-instance-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "tasks.apprunner.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy" "app_runner_instance" {
+  name = "${local.name_prefix}-app-runner-instance-policy"
+  role = aws_iam_role.app_runner_instance.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "secretsmanager:GetSecretValue"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
+}
+
 resource "aws_iam_role_policy_attachment" "app_runner_ecr" {
   role       = aws_iam_role.app_runner.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSAppRunnerServicePolicyForECRAccess"
@@ -31,7 +66,7 @@ resource "aws_apprunner_service" "backend" {
     image_repository {
       image_configuration {
         port = "3000"
-        runtime_environment_variables = {
+        runtime_environment_secrets = {
           NODE_ENV     = var.environment
           DB_HOST      = aws_db_instance.postgres.address
           DB_PORT      = aws_db_instance.postgres.port
@@ -48,6 +83,7 @@ resource "aws_apprunner_service" "backend" {
   instance_configuration {
     cpu    = "1024"  # 1 vCPU
     memory = "2048"  # 2 GB
+    instance_role_arn = aws_iam_role.app_runner_instance.arn
   }
 
   tags = {
