@@ -91,6 +91,14 @@ resource "aws_apprunner_service" "backend" {
     }
   }
 
+  health_check_configuration {
+    protocol = "TCP"
+    healthy_threshold = 1
+    unhealthy_threshold = 5
+    interval = 5
+    timeout = 2
+  }
+
   instance_configuration {
     cpu    = "1024"  # 1 vCPU
     memory = "2048"  # 2 GB
