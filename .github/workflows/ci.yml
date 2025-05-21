@@ -65,9 +65,8 @@ jobs:
         id: build
         env:
           IMAGE_NAME: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.IMAGE_NAME}}
-        working-directory: ./apps/backend
         run: |
-          docker build -t $IMAGE_NAME:${{ steps.generate_tag.outputs.sha }} .
+          docker build -t $IMAGE_NAME:${{ steps.generate_tag.outputs.sha }} -f apps/backend/Dockerfile .
           docker tag $IMAGE_NAME:${{ steps.generate_tag.outputs.sha }} $IMAGE_NAME:latest
           docker push --all-tags $IMAGE_NAME
           echo "image=$IMAGE_NAME:${{ steps.generate_tag.outputs.sha }}" >> $GITHUB_OUTPUT
