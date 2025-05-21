@@ -1,10 +1,7 @@
 resource "aws_s3_bucket" "frontend" {
-  bucket = "${var.frontend_domain}"
+  bucket = local.frontend_bucket_name
 
-  tags = {
-    Name = "${var.frontend_domain}"
-    IAC  = "True"
-  }
+  tags = local.resource_tags.frontend
 }
 
 resource "aws_s3_bucket_public_access_block" "frontend" {

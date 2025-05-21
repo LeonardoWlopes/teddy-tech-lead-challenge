@@ -1,15 +1,12 @@
 resource "aws_ecr_repository" "backend" {
-  name                 = "${local.name_prefix}-${var.ecr_repository_name}"
+  name                 = local.resource_names.ecr_repository
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
     scan_on_push = true
   }
 
-  tags = {
-    Name = "${local.name_prefix}-backend-repo"
-    IAC  = "True"
-  }
+  tags = local.resource_tags.ecr
 }
 
 resource "aws_ecr_lifecycle_policy" "backend" {

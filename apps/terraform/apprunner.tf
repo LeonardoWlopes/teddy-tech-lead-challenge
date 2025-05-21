@@ -1,5 +1,5 @@
 resource "aws_iam_role" "app_runner" {
-  name = "${local.name_prefix}-app-runner-role"
+  name = local.resource_names.app_runner_role
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -16,7 +16,7 @@ resource "aws_iam_role" "app_runner" {
 }
 
 resource "aws_iam_role_policy" "app_runner" {
-  name = "${local.name_prefix}-app-runner-policy"
+  name = local.resource_names.app_runner_policy
   role = aws_iam_role.app_runner.id
 
   policy = jsonencode({
@@ -37,7 +37,7 @@ resource "aws_iam_role_policy" "app_runner" {
 }
 
 resource "aws_iam_role" "app_runner_instance" {
-  name = "${local.name_prefix}-app-runner-instance-role"
+  name = local.resource_names.app_runner_instance_role
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -54,7 +54,7 @@ resource "aws_iam_role" "app_runner_instance" {
 }
 
 resource "aws_iam_role_policy" "app_runner_instance" {
-  name = "${local.name_prefix}-app-runner-instance-policy"
+  name = local.resource_names.app_runner_instance_policy
   role = aws_iam_role.app_runner_instance.id
 
   policy = jsonencode({
@@ -80,7 +80,7 @@ resource "aws_iam_role_policy_attachment" "app_runner_ecr" {
 }
 
 resource "aws_apprunner_service" "backend" {
-  service_name = "${local.name_prefix}-backend"
+  service_name = local.resource_names.app_runner
 
   source_configuration {
     authentication_configuration {
@@ -120,8 +120,5 @@ resource "aws_apprunner_service" "backend" {
     instance_role_arn = aws_iam_role.app_runner_instance.arn
   }
 
-  tags = {
-    Name = "${local.name_prefix}-backend"
-    IAC  = "True"
-  }
+  tags = local.resource_tags.backend
 } 

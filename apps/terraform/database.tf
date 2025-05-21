@@ -1,6 +1,5 @@
-
 resource "aws_db_instance" "postgres" {
-  identifier              = "${local.name_prefix}-postgres"
+  identifier              = local.resource_names.postgres_db
   engine                  = "postgres"
   engine_version          = "14"
   instance_class          = "db.t3.micro"
@@ -18,8 +17,5 @@ resource "aws_db_instance" "postgres" {
   db_subnet_group_name    = null
   vpc_security_group_ids  = [aws_security_group.postgres.id]
 
-  tags = {
-    Name = "${local.name_prefix}-postgres"
-    IAC  = "True"
-  }
+  tags = local.resource_tags.database
 } 

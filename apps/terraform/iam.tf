@@ -1,5 +1,5 @@
 resource "aws_iam_role" "github_actions" {
-  name = "${local.name_prefix}-github-actions-role"
+  name = local.resource_names.github_actions_role
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -24,7 +24,7 @@ resource "aws_iam_role" "github_actions" {
 }
 
 resource "aws_iam_role_policy" "github_actions" {
-  name = "${local.name_prefix}-github-actions-policy"
+  name = local.resource_names.github_actions_policy
   role = aws_iam_role.github_actions.id
 
   policy = jsonencode({
@@ -72,8 +72,8 @@ resource "aws_iam_role_policy" "github_actions" {
           "s3:GetBucketLocation"
         ]
         Resource = [
-          "arn:aws:s3:::${var.frontend_domain}",
-          "arn:aws:s3:::${var.frontend_domain}/*"
+          local.s3_resources.frontend_bucket,
+          local.s3_resources.frontend_bucket_all
         ]
       },
       {

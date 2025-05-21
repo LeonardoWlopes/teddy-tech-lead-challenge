@@ -1,5 +1,5 @@
 resource "aws_security_group" "postgres" {
-  name        = "${local.name_prefix}-postgres-sg"
+  name        = local.resource_names.postgres_sg
   description = "Allow PostgreSQL inbound traffic"
 
   ingress {
@@ -16,8 +16,5 @@ resource "aws_security_group" "postgres" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
-    Name = "${local.name_prefix}-postgres-sg"
-    IAC  = "True"
-  }
+  tags = local.resource_tags.network
 } 
