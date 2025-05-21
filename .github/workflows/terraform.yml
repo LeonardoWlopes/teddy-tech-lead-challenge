@@ -64,9 +64,9 @@ jobs:
     steps:
       - name: Update secrets
         run: |
-          echo "Atualizando os secrets do GitHub Actions..."
+          echo "Updating GitHub Actions secrets..."
           echo "FRONTEND_BUCKET_NAME=${{ needs.terraform.outputs.frontend_bucket_name }}"
-          echo "IMAGE_NAME obtido da saída do ECR (truncado para segurança)"
+          echo "IMAGE_NAME obtained from ECR output (truncated for security)"
 
   trigger-ci:
     name: "Trigger CI Pipeline"
@@ -76,5 +76,5 @@ jobs:
       - name: Trigger CI workflow
         uses: benc-uk/workflow-dispatch@v1
         with:
-          workflow: ci.yml
+          workflow: deploy.yml
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}

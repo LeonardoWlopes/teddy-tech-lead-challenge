@@ -78,6 +78,18 @@ resource "aws_iam_role_policy" "github_actions" {
       },
       {
         Effect = "Allow"
+        Action = [
+          "s3:ListBucket",
+          "s3:GetObject",
+          "s3:PutObject"
+        ]
+        Resource = [
+          "arn:aws:s3:::teddy-terraform-state",
+          "arn:aws:s3:::teddy-terraform-state/*"
+        ]
+      },
+      {
+        Effect = "Allow"
         Action = "iam:PassRole"
         Resource = aws_iam_role.app_runner.arn
       }
