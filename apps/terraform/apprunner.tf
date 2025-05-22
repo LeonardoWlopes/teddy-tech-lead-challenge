@@ -91,14 +91,14 @@ resource "aws_apprunner_service" "backend" {
       image_configuration {
         port = "3000"
         runtime_environment_variables = {
-          NODE_ENV     = var.environment
-          DB_HOST      = aws_db_instance.postgres.address
-          DB_PORT      = aws_db_instance.postgres.port
-          DB_NAME      = aws_db_instance.postgres.db_name
-          DB_USERNAME  = aws_db_instance.postgres.username
+          NODE_ENV    = var.environment
+          DB_HOST     = aws_db_instance.postgres.address
+          DB_PORT     = aws_db_instance.postgres.port
+          DB_NAME     = aws_db_instance.postgres.db_name
+          DB_USERNAME = aws_db_instance.postgres.username
         }
         runtime_environment_secrets = {
-          DB_PASSWORD  = "DB_PASSWORD"
+          DB_PASSWORD = "DB_PASSWORD"
         }
       }
       image_identifier      = "${aws_ecr_repository.backend.repository_url}:latest"
@@ -107,16 +107,16 @@ resource "aws_apprunner_service" "backend" {
   }
 
   health_check_configuration {
-    protocol = "TCP"
-    healthy_threshold = 1
+    protocol            = "TCP"
+    healthy_threshold   = 1
     unhealthy_threshold = 5
-    interval = 5
-    timeout = 2
+    interval            = 5
+    timeout             = 2
   }
 
   instance_configuration {
-    cpu    = "1024"  # 1 vCPU
-    memory = "2048"  # 2 GB
+    cpu               = "1024" # 1 vCPU
+    memory            = "2048" # 2 GB
     instance_role_arn = aws_iam_role.app_runner_instance.arn
   }
 

@@ -89,8 +89,8 @@ resource "aws_iam_role_policy" "github_actions" {
         ]
       },
       {
-        Effect = "Allow"
-        Action = "iam:PassRole"
+        Effect   = "Allow"
+        Action   = "iam:PassRole"
         Resource = aws_iam_role.app_runner.arn
       }
     ]

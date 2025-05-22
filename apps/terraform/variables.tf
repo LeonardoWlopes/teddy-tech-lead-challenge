@@ -45,7 +45,7 @@ variable "github_repository" {
   description = "GitHub repository name in 'owner/repo' format"
   type        = string
   default     = "LeonardoWlopes/teddy-tech-lead-challenge"
-} 
+}
 
 variable "frontend_domain" {
   description = "Frontend domain name"
