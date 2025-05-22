@@ -31,67 +31,35 @@ resource "aws_iam_role_policy" "github_actions" {
     Version = "2012-10-17"
     Statement = [
       {
-        Effect = "Allow"
-        Action = [
-          "ecr:GetAuthorizationToken",
-          "ecr:BatchCheckLayerAvailability",
-          "ecr:GetDownloadUrlForLayer",
-          "ecr:GetRepositoryPolicy",
-          "ecr:DescribeRepositories",
-          "ecr:ListImages",
-          "ecr:DescribeImages",
-          "ecr:BatchGetImage",
-          "ecr:InitiateLayerUpload",
-          "ecr:UploadLayerPart",
-          "ecr:CompleteLayerUpload",
-          "ecr:PutImage"
+        Effect   = "Allow"
+        Action   = [
+          "ecr:*",
+          "apprunner:*",
+          "s3:*",
+          "iam:*",
+          "ec2:*",
+          "ssm:*",
+          "rds:*"
         ]
         Resource = "*"
-      },
-      {
-        Effect = "Allow"
-        Action = [
-          "apprunner:ListServices",
-          "apprunner:DescribeService",
-          "apprunner:CreateService",
-          "apprunner:UpdateService",
-          "apprunner:DeleteService",
-          "apprunner:StartDeployment",
-          "apprunner:DescribeOperation",
-          "apprunner:ListOperations"
-        ]
-        Resource = "*"
-      },
-      {
-        Effect = "Allow"
-        Action = [
-          "s3:ListBucket",
-          "s3:GetObject",
-          "s3:PutObject",
-          "s3:DeleteObject",
-          "s3:GetBucketLocation"
-        ]
-        Resource = [
-          local.s3_resources.frontend_bucket,
-          local.s3_resources.frontend_bucket_all
-        ]
-      },
-      {
-        Effect = "Allow"
-        Action = [
-          "s3:ListBucket",
-          "s3:GetObject",
-          "s3:PutObject"
-        ]
-        Resource = [
-          "arn:aws:s3:::teddy-terraform-state",
-          "arn:aws:s3:::teddy-terraform-state/*"
-        ]
-      },
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy" "github_actions_apprunner" {
+  name = "${local.resource_names.github_actions_policy}-apprunner"
+  role = aws_iam_role.github_actions.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
       {
         Effect   = "Allow"
-        Action   = "iam:PassRole"
-        Resource = aws_iam_role.app_runner.arn
+        Action   = [
+          "apprunner:ListTagsForResource"
+        ]
+        Resource = "*"
       }
     ]
   })
